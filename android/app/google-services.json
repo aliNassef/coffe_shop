@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "613637613101",
+    "project_id": "order-tracker-76c47",
+    "storage_bucket": "order-tracker-76c47.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613637613101:android:7748924cd78fa91b10faa4",
+        "android_client_info": {
+          "package_name": "com.example.coffe_shop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVYQ5EdZSQ8WhbPCcbky8E78X6TWRtb1Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613637613101:android:0f443c4b94ab565110faa4",
+        "android_client_info": {
+          "package_name": "com.example.order_tracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVYQ5EdZSQ8WhbPCcbky8E78X6TWRtb1Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
