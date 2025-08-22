@@ -4,17 +4,19 @@ import '../../features/home/data/model/coffe_model.dart';
 import '../../features/order/data/models/order_model.dart';
 
 class FirestoreHelper {
+  final FirebaseFirestore _firestore;
+
+  FirestoreHelper({FirebaseFirestore? firestore})
+      : _firestore = firestore ?? FirebaseFirestore.instance;
+
   Future<void> addOrder(OrderModel order) async {
-    final ordersRef = FirebaseFirestore.instance.collection('orders');
+    final ordersRef = _firestore.collection('orders');
 
     await ordersRef.doc(order.orderId).set(order.toJson());
   }
 
   Future<OrderModel?> getOrderById(String orderId) async {
-    final doc = await FirebaseFirestore.instance
-        .collection('orders')
-        .doc(orderId)
-        .get();
+    final doc = await _firestore.collection('orders').doc(orderId).get();
 
     if (doc.exists) {
       return OrderModel.fromJson(doc.data()!, doc.id);
@@ -23,9 +25,7 @@ class FirestoreHelper {
   }
 
   Future<List<OrderModel>> getAllOrders() async {
-    final querySnapshot = await FirebaseFirestore.instance
-        .collection('orders')
-        .get();
+    final querySnapshot = await _firestore.collection('orders').get();
 
     return querySnapshot.docs
         .map((doc) => OrderModel.fromJson(doc.data(), doc.id))
@@ -33,10 +33,7 @@ class FirestoreHelper {
   }
 
   Future<CoffeeModel?> getCoffeeById(String coffeeId) async {
-    final doc = await FirebaseFirestore.instance
-        .collection('coffees')
-        .doc(coffeeId)
-        .get();
+    final doc = await _firestore.collection('coffees').doc(coffeeId).get();
 
     if (doc.exists) {
       return CoffeeModel.fromJson(doc.data()!);
@@ -45,9 +42,7 @@ class FirestoreHelper {
   }
 
   Future<List<CoffeeModel>> getAllCoffees() async {
-    final querySnapshot = await FirebaseFirestore.instance
-        .collection('coffees')
-        .get();
+    final querySnapshot = await _firestore.collection('coffees').get();
 
     return querySnapshot.docs
         .map((doc) => CoffeeModel.fromJson(doc.data()))
@@ -55,7 +50,7 @@ class FirestoreHelper {
   }
 
   Future<List<CoffeeModel>> searchCoffees(String query) async {
-    final coffeesRef = FirebaseFirestore.instance.collection('coffees');
+    final coffeesRef = _firestore.collection('coffees');
 
     final snapshot = await coffeesRef
         .where('name', isGreaterThanOrEqualTo: query)

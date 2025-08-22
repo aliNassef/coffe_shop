@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../home/data/model/coffe_model.dart';
 
 class OrderModel {
@@ -43,7 +42,7 @@ class OrderModel {
       userLat: (json['userLat'] ?? 0).toDouble(),
       userLong: (json['userLong'] ?? 0).toDouble(),
       status: json['status'] ?? 'pending',
-      createdAt: (json['createdAt'] as Timestamp).toDate(),
+      createdAt: (json['createdAt'] as DateTime),
       deliveryId: json['deliveryId'] ?? '',
       deliveryName: json['deliveryName'] ?? '',
       deliveryPhone: json['deliveryPhone'] ?? '',
