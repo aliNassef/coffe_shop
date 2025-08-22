@@ -7,29 +7,41 @@ class FirestoreHelper {
   final FirebaseFirestore _firestore;
 
   FirestoreHelper({FirebaseFirestore? firestore})
-      : _firestore = firestore ?? FirebaseFirestore.instance;
+    : _firestore = firestore ?? FirebaseFirestore.instance;
 
   Future<void> addOrder(OrderModel order) async {
-    final ordersRef = _firestore.collection('orders');
+    try {
+      final ordersRef = _firestore.collection('orders');
 
-    await ordersRef.doc(order.orderId).set(order.toJson());
+      await ordersRef.doc(order.orderId).set(order.toJson());
+    } catch (e) {
+      throw Exception('Error adding order: $e');
+    }
   }
 
   Future<OrderModel?> getOrderById(String orderId) async {
-    final doc = await _firestore.collection('orders').doc(orderId).get();
+    try {
+      final doc = await _firestore.collection('orders').doc(orderId).get();
 
-    if (doc.exists) {
-      return OrderModel.fromJson(doc.data()!, doc.id);
+      if (doc.exists) {
+        return OrderModel.fromJson(doc.data()!, doc.id);
+      }
+      return null;
+    } catch (e) {
+      throw Exception('Error fetching order: $e');
     }
-    return null;
   }
 
   Future<List<OrderModel>> getAllOrders() async {
-    final querySnapshot = await _firestore.collection('orders').get();
+    try {
+      final querySnapshot = await _firestore.collection('orders').get();
 
-    return querySnapshot.docs
-        .map((doc) => OrderModel.fromJson(doc.data(), doc.id))
-        .toList();
+      return querySnapshot.docs
+          .map((doc) => OrderModel.fromJson(doc.data(), doc.id))
+          .toList();
+    } catch (e) {
+      throw Exception('Error fetching orders: $e');
+    }
   }
 
   Future<CoffeeModel?> getCoffeeById(String coffeeId) async {
@@ -42,30 +54,38 @@ class FirestoreHelper {
   }
 
   Future<List<CoffeeModel>> getAllCoffees() async {
-    final querySnapshot = await _firestore.collection('coffees').get();
+    try {
+      final querySnapshot = await _firestore.collection('coffees').get();
 
-    return querySnapshot.docs
-        .map((doc) => CoffeeModel.fromJson(doc.data()))
-        .toList();
+      return querySnapshot.docs
+          .map((doc) => CoffeeModel.fromJson(doc.data()))
+          .toList();
+    } catch (e) {
+      throw Exception('Error fetching coffees: $e');
+    }
   }
 
   Future<List<CoffeeModel>> searchCoffees(String query) async {
-    final coffeesRef = _firestore.collection('coffees');
+    try {
+      final coffeesRef = _firestore.collection('coffees');
 
-    final snapshot = await coffeesRef
-        .where('name', isGreaterThanOrEqualTo: query)
-        .where('name', isLessThanOrEqualTo: '$query\uf8ff')
-        .get();
+      final snapshot = await coffeesRef
+          .where('name', isGreaterThanOrEqualTo: query)
+          .where('name', isLessThanOrEqualTo: '$query\uf8ff')
+          .get();
 
-    final typeSnapshot = await coffeesRef
-        .where('type', isGreaterThanOrEqualTo: query)
-        .where('type', isLessThanOrEqualTo: '$query\uf8ff')
-        .get();
+      final typeSnapshot = await coffeesRef
+          .where('type', isGreaterThanOrEqualTo: query)
+          .where('type', isLessThanOrEqualTo: '$query\uf8ff')
+          .get();
 
-    final allDocs = [...snapshot.docs, ...typeSnapshot.docs];
+      final allDocs = [...snapshot.docs, ...typeSnapshot.docs];
 
-    final uniqueDocs = {for (var doc in allDocs) doc.id: doc}.values.toList();
+      final uniqueDocs = {for (var doc in allDocs) doc.id: doc}.values.toList();
 
-    return uniqueDocs.map((doc) => CoffeeModel.fromJson(doc.data())).toList();
+      return uniqueDocs.map((doc) => CoffeeModel.fromJson(doc.data())).toList();
+    } catch (e) {
+      throw Exception('Error searching coffees: $e');
+    }
   }
 }
