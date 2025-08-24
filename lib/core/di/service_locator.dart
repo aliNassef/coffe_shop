@@ -1,3 +1,6 @@
+import 'package:coffe_shop/core/repo/user_repo.dart';
+
+import '../../features/order/presentation/controller/order_cubit/order_cubit.dart';
 import '../helpers/firestore_helper.dart';
 import '../helpers/location_helper.dart';
 import '../../features/home/data/repo/home_repo.dart';
@@ -9,22 +12,31 @@ import '../../features/home/presentation/controller/bloc/coffe_search_bloc.dart'
 import '../../features/home/presentation/controller/get_user_location_cubit/get_user_location_cubit.dart';
 import '../../features/order/data/repo/order_repo.dart';
 import '../../features/order/data/repo/order_repo_impl.dart';
-import '../../features/order/presentation/controller/cubit/order_cubit.dart';
+import '../../features/order/presentation/controller/user_cubit/user_cubit.dart';
+import '../repo/user_repo_impl.dart';
 
 final injector = GetIt.instance;
 
 void setupServiceLocator() async {
   _setupExternal();
   _setupHomeFeature();
+  _setupUserFeature();
   _setupOrderFeature();
 }
 
 void _setupOrderFeature() {
   injector.registerLazySingleton<OrderRepo>(
-    () => OrderRepoImpl(locationHelper: injector<LocationHelper>()),
+    () => OrderRepoImpl(firestoreHelper: injector<FirestoreHelper>()),
   );
-  injector.registerLazySingleton<OrderCubit>(
-    () => OrderCubit(injector<OrderRepo>()),
+  injector.registerFactory(() => OrderCubit(injector<OrderRepo>()));
+}
+
+void _setupUserFeature() {
+  injector.registerLazySingleton<UserRepo>(
+    () => UserRepoImpl(locationHelper: injector<LocationHelper>()),
+  );
+  injector.registerLazySingleton<UserCubit>(
+    () => UserCubit(injector<UserRepo>()),
   );
 }
 

@@ -1,5 +1,5 @@
 import 'core/di/service_locator.dart';
-import 'features/order/presentation/controller/cubit/order_cubit.dart';
+import 'features/order/presentation/controller/user_cubit/user_cubit.dart';
 import 'features/splash/presentation/view/splash_view.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class CoffeShopApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => injector<OrderCubit>()..getUserAddress(),
+      create: (context) => injector<UserCubit>()..getUserAddress(),
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
         minTextAdapt: true,

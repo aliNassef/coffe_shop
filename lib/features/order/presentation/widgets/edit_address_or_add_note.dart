@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import '../controller/cubit/order_cubit.dart';
+import '../controller/user_cubit/user_cubit.dart';
 import '../views/pick_address_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +26,7 @@ class EditAddressOrAddNote extends StatelessWidget {
             log(address ?? 'No address selected');
 
             if (address != null && context.mounted) {
-              context.read<OrderCubit>().updateUserAddress(address);
+              context.read<UserCubit>().updateUserAddress(address);
             }
           },
           child: Container(

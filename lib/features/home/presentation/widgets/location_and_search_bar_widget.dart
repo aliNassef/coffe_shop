@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import '../../../../core/extensions/mediaquery_size.dart';
 import '../controller/bloc/coffe_search_bloc.dart';
-import '../../../order/presentation/controller/cubit/order_cubit.dart';
+import '../../../order/presentation/controller/user_cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,13 +32,13 @@ class LocationAndSearchBarWidget extends StatelessWidget {
               style: AppStyles.regular20.copyWith(color: AppColors.gray),
             ),
             Gap(8),
-            BlocBuilder<OrderCubit, OrderState>(
+            BlocBuilder<UserCubit, UserState>(
               buildWhen: (previous, current) =>
-                  current is GetuserLocationLoaded ||
+                  current is GetuserLocationLoadedState ||
                   current is GetuserLocationFailed ||
-                  current is GetuserLocationLoading,
+                  current is GetuserLocationLoadingState,
               builder: (context, state) {
-                if (state is GetuserLocationLoading) {
+                if (state is GetuserLocationLoadingState) {
                   return Skeletonizer(
                     enabled: true,
                     child: Text(
@@ -51,7 +51,7 @@ class LocationAndSearchBarWidget extends StatelessWidget {
                   log('Error: ${state.error}');
                   return CustomFailureWidget(errMessage: state.error);
                 }
-                if (state is GetuserLocationLoaded) {
+                if (state is GetuserLocationLoadedState) {
                   return Text(
                     state.address,
                     style: AppStyles.bold20.copyWith(color: AppColors.light),

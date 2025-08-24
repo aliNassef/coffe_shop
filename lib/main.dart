@@ -8,7 +8,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 void main() async {
   await AppInitializer.init();
-  if (!kReleaseMode) {
+  if (kReleaseMode) {
     await SentryFlutter.init(
       (options) {
         options.dsn = Env.sentryDsn;
@@ -24,6 +24,13 @@ void main() async {
           ),
         );
       },
+    );
+  } else {
+    runApp(
+      DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) => const CoffeShopApp(),
+      ),
     );
   }
 }

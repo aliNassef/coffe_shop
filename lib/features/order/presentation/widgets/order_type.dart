@@ -15,21 +15,31 @@ class _OrderTypeState extends State<OrderType> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: List.generate(2, (index) {
-        return Expanded(
-          child: InkWell(
-            onTap: () {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            child: DeleveryOrPickUp(
-              title: orderTypes[index],
-              isSelected: _selectedIndex == index,
-            ),
+      spacing: 20,
+      children: [
+        InkWell(
+          onTap: () {
+            setState(() {
+              _selectedIndex = 0;
+            });
+          },
+          child: DeleveryOrPickUp(
+            title: orderTypes[0],
+            isSelected: _selectedIndex == 0,
           ),
-        );
-      }),
+        ),
+        InkWell(
+          onTap: () {
+            setState(() {
+              _selectedIndex = 1;
+            });
+          },
+          child: DeleveryOrPickUp(
+            title: orderTypes[1],
+            isSelected: _selectedIndex == 1,
+          ),
+        ),
+      ],
     );
   }
 }

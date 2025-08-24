@@ -1,20 +1,23 @@
+import 'package:coffe_shop/core/helpers/firestore_helper.dart';
+import 'package:coffe_shop/features/order/data/models/order_model.dart';
+
 import '../../../../core/helpers/failure.dart';
 
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/helpers/location_helper.dart';
 import 'order_repo.dart';
 
 class OrderRepoImpl extends OrderRepo {
-  final LocationHelper _locationHelper;
+  final FirestoreHelper _firestoreHelper;
 
-  OrderRepoImpl({required LocationHelper locationHelper})
-    : _locationHelper = locationHelper;
+  OrderRepoImpl({required FirestoreHelper firestoreHelper})
+    : _firestoreHelper = firestoreHelper;
+
   @override
-  Future<Either<Failure, String>> getUserAddress() async {
+  Future<Either<Failure, void>> addOrder(OrderModel order) async {
     try {
-      final address = await _locationHelper.getCurrentLocation();
-      return Right(address);
+      await _firestoreHelper.addOrder(order);
+      return const Right(null);
     } catch (e) {
       return Left(Failure(errMessage: e.toString()));
     }

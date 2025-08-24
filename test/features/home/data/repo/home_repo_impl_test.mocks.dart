@@ -3,14 +3,15 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
-import 'package:coffe_shop/core/helpers/firestore_helper.dart' as _i2;
-import 'package:coffe_shop/core/helpers/location_helper.dart' as _i6;
-import 'package:coffe_shop/features/home/data/model/coffe_model.dart' as _i5;
-import 'package:coffe_shop/features/order/data/models/order_model.dart' as _i4;
+import 'package:coffe_shop/core/helpers/firestore_helper.dart' as _i3;
+import 'package:coffe_shop/core/helpers/location_helper.dart' as _i7;
+import 'package:coffe_shop/features/home/data/model/coffe_model.dart' as _i6;
+import 'package:coffe_shop/features/order/data/models/order_model.dart' as _i5;
+import 'package:geolocator/geolocator.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i7;
+import 'package:mockito/src/dummies.dart' as _i8;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -26,88 +27,103 @@ import 'package:mockito/src/dummies.dart' as _i7;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakePosition_0 extends _i1.SmartFake implements _i2.Position {
+  _FakePosition_0(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
 /// A class which mocks [FirestoreHelper].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockFirestoreHelper extends _i1.Mock implements _i2.FirestoreHelper {
+class MockFirestoreHelper extends _i1.Mock implements _i3.FirestoreHelper {
   MockFirestoreHelper() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<void> addOrder(_i4.OrderModel? order) =>
+  _i4.Future<void> addOrder(_i5.OrderModel? order) =>
       (super.noSuchMethod(
             Invocation.method(#addOrder, [order]),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i4.Future<void>);
 
   @override
-  _i3.Future<_i4.OrderModel?> getOrderById(String? orderId) =>
+  _i4.Future<_i5.OrderModel?> getOrderById(String? orderId) =>
       (super.noSuchMethod(
             Invocation.method(#getOrderById, [orderId]),
-            returnValue: _i3.Future<_i4.OrderModel?>.value(),
+            returnValue: _i4.Future<_i5.OrderModel?>.value(),
           )
-          as _i3.Future<_i4.OrderModel?>);
+          as _i4.Future<_i5.OrderModel?>);
 
   @override
-  _i3.Future<List<_i4.OrderModel>> getAllOrders() =>
+  _i4.Future<List<_i5.OrderModel>> getAllOrders() =>
       (super.noSuchMethod(
             Invocation.method(#getAllOrders, []),
-            returnValue: _i3.Future<List<_i4.OrderModel>>.value(
-              <_i4.OrderModel>[],
+            returnValue: _i4.Future<List<_i5.OrderModel>>.value(
+              <_i5.OrderModel>[],
             ),
           )
-          as _i3.Future<List<_i4.OrderModel>>);
+          as _i4.Future<List<_i5.OrderModel>>);
 
   @override
-  _i3.Future<_i5.CoffeeModel?> getCoffeeById(String? coffeeId) =>
+  _i4.Future<_i6.CoffeeModel?> getCoffeeById(String? coffeeId) =>
       (super.noSuchMethod(
             Invocation.method(#getCoffeeById, [coffeeId]),
-            returnValue: _i3.Future<_i5.CoffeeModel?>.value(),
+            returnValue: _i4.Future<_i6.CoffeeModel?>.value(),
           )
-          as _i3.Future<_i5.CoffeeModel?>);
+          as _i4.Future<_i6.CoffeeModel?>);
 
   @override
-  _i3.Future<List<_i5.CoffeeModel>> getAllCoffees() =>
+  _i4.Future<List<_i6.CoffeeModel>> getAllCoffees() =>
       (super.noSuchMethod(
             Invocation.method(#getAllCoffees, []),
-            returnValue: _i3.Future<List<_i5.CoffeeModel>>.value(
-              <_i5.CoffeeModel>[],
+            returnValue: _i4.Future<List<_i6.CoffeeModel>>.value(
+              <_i6.CoffeeModel>[],
             ),
           )
-          as _i3.Future<List<_i5.CoffeeModel>>);
+          as _i4.Future<List<_i6.CoffeeModel>>);
 
   @override
-  _i3.Future<List<_i5.CoffeeModel>> searchCoffees(String? query) =>
+  _i4.Future<List<_i6.CoffeeModel>> searchCoffees(String? query) =>
       (super.noSuchMethod(
             Invocation.method(#searchCoffees, [query]),
-            returnValue: _i3.Future<List<_i5.CoffeeModel>>.value(
-              <_i5.CoffeeModel>[],
+            returnValue: _i4.Future<List<_i6.CoffeeModel>>.value(
+              <_i6.CoffeeModel>[],
             ),
           )
-          as _i3.Future<List<_i5.CoffeeModel>>);
+          as _i4.Future<List<_i6.CoffeeModel>>);
 }
 
 /// A class which mocks [LocationHelper].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLocationHelper extends _i1.Mock implements _i6.LocationHelper {
+class MockLocationHelper extends _i1.Mock implements _i7.LocationHelper {
   MockLocationHelper() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<String> getCurrentLocation() =>
+  _i4.Future<_i2.Position> getUserCoardinates() =>
+      (super.noSuchMethod(
+            Invocation.method(#getUserCoardinates, []),
+            returnValue: _i4.Future<_i2.Position>.value(
+              _FakePosition_0(this, Invocation.method(#getUserCoardinates, [])),
+            ),
+          )
+          as _i4.Future<_i2.Position>);
+
+  @override
+  _i4.Future<String> getCurrentLocation() =>
       (super.noSuchMethod(
             Invocation.method(#getCurrentLocation, []),
-            returnValue: _i3.Future<String>.value(
-              _i7.dummyValue<String>(
+            returnValue: _i4.Future<String>.value(
+              _i8.dummyValue<String>(
                 this,
                 Invocation.method(#getCurrentLocation, []),
               ),
             ),
           )
-          as _i3.Future<String>);
+          as _i4.Future<String>);
 }
