@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import '../../../data/repo/home_repo.dart';
 import 'package:meta/meta.dart';
 
