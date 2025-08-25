@@ -1,7 +1,7 @@
 import 'package:coffe_shop/features/order/data/models/order_model.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../../../core/extensions/mediaquery_size.dart';
-import '../../../../core/helpers/toast_dialog.dart';
+import '../../../../core/helpers/top_dialog.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_styles.dart';
 import '../../../../core/widgets/default_app_button.dart';
@@ -137,7 +137,7 @@ class _OrderViewBodyState extends State<OrderViewBody> {
           current is AddorderSuccess,
       builder: (context, state) {
         if (state is AddorderSuccess) {
-          showToast(text: 'Order added successfully');
+          showTopDialogWithButton(context);
         }
         return BlocSelector<UserCubit, UserState, Position?>(
           selector: (userState) {
