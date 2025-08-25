@@ -126,7 +126,7 @@ class CoffeDetailsView extends StatelessWidget {
               },
             ),
             Gap(32),
-            TotalPriceAndBuyNowButton(price: coffe.price, deleveryFee: 3),
+            TotalPriceAndBuyNowButton(coffe: coffe, deleveryFee: 3),
             Gap(30),
           ],
         ).withHorizontalPadding(16),

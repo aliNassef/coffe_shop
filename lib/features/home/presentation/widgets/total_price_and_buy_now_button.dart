@@ -1,3 +1,4 @@
+import 'package:coffe_shop/features/home/data/model/coffe_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,10 +10,10 @@ import '../../../order/presentation/views/order_view.dart';
 class TotalPriceAndBuyNowButton extends StatelessWidget {
   const TotalPriceAndBuyNowButton({
     super.key,
-    required this.price,
+    required this.coffe,
     required this.deleveryFee,
   });
-  final double price;
+  final CoffeeModel coffe;
   final double deleveryFee;
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class TotalPriceAndBuyNowButton extends StatelessWidget {
               style: AppStyles.regular22.copyWith(color: Colors.grey),
             ),
             Text(
-              '\$${price.toStringAsFixed(2)}',
+              '\$${coffe.price.toStringAsFixed(2)}',
               style: AppStyles.semiBold24.copyWith(
                 color: AppColors.dark,
                 fontSize: 32.sp,
@@ -49,6 +50,6 @@ class TotalPriceAndBuyNowButton extends StatelessWidget {
   }
 
   void _goToOrderView(BuildContext context) {
-    Navigator.pushNamed(context, OrderView.routeName);
+    Navigator.pushNamed(context, OrderView.routeName, arguments: coffe);
   }
 }

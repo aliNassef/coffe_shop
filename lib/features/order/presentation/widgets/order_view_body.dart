@@ -1,3 +1,4 @@
+import 'package:coffe_shop/features/home/data/model/coffe_model.dart';
 import 'package:coffe_shop/features/order/data/models/order_model.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../../../core/extensions/mediaquery_size.dart';
@@ -17,8 +18,8 @@ import '../widgets/order_item.dart';
 import 'order_type.dart';
 
 class OrderViewBody extends StatefulWidget {
-  const OrderViewBody({super.key});
-
+  const OrderViewBody({super.key, required this.coffe});
+  final CoffeeModel coffe;
   @override
   State<OrderViewBody> createState() => _OrderViewBodyState();
 }
@@ -96,7 +97,10 @@ class _OrderViewBodyState extends State<OrderViewBody> {
               style: AppStyles.regular20.copyWith(color: AppColors.dark),
             ),
             Spacer(),
-            Text('\$5.00', style: AppStyles.bold20),
+            Text(
+              '\$${widget.coffe.price.toStringAsFixed(2)}',
+              style: AppStyles.bold20,
+            ),
           ],
         ),
         Gap(16),
@@ -120,7 +124,10 @@ class _OrderViewBodyState extends State<OrderViewBody> {
               style: AppStyles.bold20.copyWith(color: AppColors.dark),
             ),
             Spacer(),
-            Text('\$10.00', style: AppStyles.bold24),
+            Text(
+              '\$${(widget.coffe.price + 5).toStringAsFixed(2)}',
+              style: AppStyles.bold24,
+            ),
           ],
         ),
         Gap(30),

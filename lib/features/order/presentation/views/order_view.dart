@@ -5,10 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 
+import '../../../home/data/model/coffe_model.dart';
 import '../widgets/order_view_body.dart';
 
 class OrderView extends StatelessWidget {
-  const OrderView({super.key});
+  const OrderView({super.key, required this.coffe});
+  final CoffeeModel coffe;
   static const routeName = 'order_view';
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class OrderView extends StatelessWidget {
       ),
       body: BlocProvider(
         create: (context) => injector<OrderCubit>(),
-        child: const OrderViewBody(),
+        child: OrderViewBody(coffe: coffe),
       ).withHorizontalPadding(16),
     );
   }

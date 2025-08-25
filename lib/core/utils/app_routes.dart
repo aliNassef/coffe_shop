@@ -26,8 +26,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
             FadeTransition(opacity: animation, child: child),
       );
     case OrderView.routeName:
+      final coffe = settings.arguments as CoffeeModel;
       return PageRouteBuilder(
-        pageBuilder: (_, _, _) => const OrderView(),
+        pageBuilder: (_, _, _) => OrderView(coffe: coffe),
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             FadeTransition(opacity: animation, child: child),
       );
