@@ -1,4 +1,7 @@
+import 'package:coffe_shop/core/di/service_locator.dart';
+import 'package:coffe_shop/features/order/presentation/controller/order_cubit/order_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../widgets/user_orders_view_body.dart';
@@ -21,7 +24,10 @@ class UserOrdersView extends StatelessWidget {
         ),
         automaticallyImplyLeading: false,
       ),
-      body: UserOrdersViewBody(),
+      body: BlocProvider(
+        create: (context) => injector<OrderCubit>()..getUserOrders(),
+        child: UserOrdersViewBody(),
+      ),
     );
   }
 }

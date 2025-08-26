@@ -7,6 +7,24 @@ sealed class OrderState extends Equatable {
   List<Object> get props => [];
 }
 
+final class GetUserOrdersLoading extends OrderState {}
+
+final class GetUserOrdersFailed extends OrderState {
+  final String errMessage;
+  const GetUserOrdersFailed({required this.errMessage});
+
+  @override
+  List<Object> get props => [errMessage];
+}
+
+final class GetUserOrdersSuccess extends OrderState {
+  final List<OrderModel> orders;
+  const GetUserOrdersSuccess({required this.orders});
+
+  @override
+  List<Object> get props => [orders];
+}
+
 final class OrderInitial extends OrderState {}
 
 final class AddorderLoading extends OrderState {}

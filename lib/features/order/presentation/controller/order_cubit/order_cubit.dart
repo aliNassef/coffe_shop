@@ -18,4 +18,13 @@ class OrderCubit extends Cubit<OrderState> {
       (success) => emit(AddorderSuccess()),
     );
   }
+
+  void getUserOrders() async {
+    emit(GetUserOrdersLoading());
+    final getUserOrdersOrFailure = await __orderRepo.getUserOrders();
+    getUserOrdersOrFailure.fold(
+      (failure) => emit(GetUserOrdersFailed(errMessage: failure.errMessage)),
+      (success) => emit(GetUserOrdersSuccess(orders: success)),
+    );
+  }
 }

@@ -22,4 +22,14 @@ class OrderRepoImpl extends OrderRepo {
       return Left(Failure(errMessage: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<OrderModel>>> getUserOrders() async {
+    try {
+      final orders = await _firestoreHelper.getAllOrders();
+      return Right(orders);
+    } catch (e) {
+      return Left(Failure(errMessage: e.toString()));
+    }
+  }
 }

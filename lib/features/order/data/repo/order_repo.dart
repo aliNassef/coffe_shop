@@ -5,4 +5,5 @@ import '../models/order_model.dart';
 
 abstract class OrderRepo {
   Future<Either<Failure, void>> addOrder(OrderModel order);
+  Future<Either<Failure, List<OrderModel>>> getUserOrders();
 }
