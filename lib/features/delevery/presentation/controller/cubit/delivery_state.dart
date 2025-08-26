@@ -26,3 +26,11 @@ final class DeliveryFailure extends DeliveryState {
   @override
   List<Object> get props => [errMessage];
 }
+
+final class DeliveryUpdateOrderState extends DeliveryState {
+  final String status;
+
+  const DeliveryUpdateOrderState({required this.status});
+  @override
+  List<Object> get props => [status];
+}

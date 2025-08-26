@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../core/helpers/order_status_enum.dart';
 import '../../../home/data/model/coffe_model.dart';
 import 'delivery_order_item.dart';
 
@@ -54,7 +55,7 @@ class DelieveryViewBody extends StatelessWidget {
             userPhone: "0101234567",
             userLat: 30.0444,
             userLong: 31.2357,
-            status: "pending",
+            status: getOrderStatusName(OrderStatus.pending),
             createdAt: DateTime.now(),
             deliveryId: "d123",
             deliveryName: "Ahmed",
@@ -69,7 +70,8 @@ class DelieveryViewBody extends StatelessWidget {
                 price: 45.0,
                 size: "Medium",
                 count: 1,
-                img: "https://...",
+                img:
+                    "https://plus.unsplash.com/premium_photo-1673545518947-ddf3240090b1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 rate: 4.5,
                 desc: "Freshly brewed latte with milk",
                 type: "Latte",

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:coffe_shop/features/delevery/data/repo/delievery_repo.dart';
 import 'package:coffe_shop/features/order/data/models/order_model.dart';
@@ -15,23 +17,28 @@ class DeliveryCubit extends Cubit<DeliveryState> {
     required DeleiveryModel deleiveryModel,
     required String orderId,
   }) async {
-    emit(DeliveryLoading());
-    final result = await _delieveryRepo.actionOnOrder(
+    await _delieveryRepo.actionOnOrder(
       deleiveryModel: deleiveryModel,
       orderId: orderId,
     );
-    result.fold(
-      (failure) => emit(DeliveryFailure(errMessage: failure.errMessage)),
-      (r) {},
-    );
   }
 
+  StreamSubscription? _streamSubscription;
   void getDeliveryOrrders() async {
-    await for (final ordersOrFailure in _delieveryRepo.getDeliveryOrders()) {
+    emit(DeliveryLoading());
+    _streamSubscription = _delieveryRepo.getDeliveryOrders().listen((
+      ordersOrFailure,
+    ) {
       ordersOrFailure.fold(
         (failure) => emit(DeliveryFailure(errMessage: failure.errMessage)),
         (orders) => emit(DeliveryLoaded(orders: orders)),
       );
-    }
+    });
+  }
+
+  @override
+  Future<void> close() {
+    _streamSubscription?.cancel();
+    return super.close();
   }
 }

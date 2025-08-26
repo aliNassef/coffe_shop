@@ -111,6 +111,8 @@ class FirestoreHelper {
         'deliveryId': deleveryModel.deliveryId,
         'deliveryName': deleveryModel.deliveryName,
         'deliveryPhone': deleveryModel.deliveryPhone,
+        'deliveryLat': deleveryModel.deliveryLat,
+        'deliveryLong': deleveryModel.deliveryLong,
         'status': deleveryModel.status,
       });
     } catch (e) {
