@@ -1,3 +1,4 @@
+import '../../features/delevery/presentation/view/delievery_view.dart';
 import '../../features/order/presentation/views/track_order_map_view.dart';
 import '../../features/splash/presentation/view/splash_view.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,12 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case TrackOrderMapView.routeName:
       return PageRouteBuilder(
         pageBuilder: (_, _, _) => const TrackOrderMapView(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(opacity: animation, child: child),
+      );
+    case DelieveryView.routeName:
+      return PageRouteBuilder(
+        pageBuilder: (_, _, _) => const DelieveryView(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             FadeTransition(opacity: animation, child: child),
       );

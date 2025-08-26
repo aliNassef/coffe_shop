@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffe_shop/features/delevery/data/model/deleivery_model.dart';
 import '../../features/home/data/model/coffe_model.dart';
 
 import '../../features/order/data/models/order_model.dart';
@@ -86,6 +87,34 @@ class FirestoreHelper {
       return uniqueDocs.map((doc) => CoffeeModel.fromJson(doc.data())).toList();
     } catch (e) {
       throw Exception('Error searching coffees: $e');
+    }
+  }
+
+  Stream<List<OrderModel>> getOrdersStream() {
+    try {
+      return _firestore.collection('orders').snapshots().map((snapshot) {
+        return snapshot.docs
+            .map((doc) => OrderModel.fromJson(doc.data(), doc.id))
+            .toList();
+      });
+    } catch (e) {
+      throw Exception('Error fetching orders: $e');
+    }
+  }
+
+  Future<void> acceptOrder({
+    required DeleiveryModel deleveryModel,
+    required String orderId,
+  }) async {
+    try {
+      await _firestore.collection('orders').doc(orderId).update({
+        'deliveryId': deleveryModel.deliveryId,
+        'deliveryName': deleveryModel.deliveryName,
+        'deliveryPhone': deleveryModel.deliveryPhone,
+        'status': deleveryModel.status,
+      });
+    } catch (e) {
+      throw Exception('Error accepting order: $e');
     }
   }
 }
