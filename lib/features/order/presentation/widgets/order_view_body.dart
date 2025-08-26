@@ -1,3 +1,4 @@
+import 'package:coffe_shop/core/helpers/order_status_enum.dart';
 import 'package:coffe_shop/features/home/data/model/coffe_model.dart';
 import 'package:coffe_shop/features/order/data/models/order_model.dart';
 import 'package:geolocator/geolocator.dart';
@@ -166,13 +167,9 @@ class _OrderViewBodyState extends State<OrderViewBody> {
                         userPhone: '01552630695',
                         userLat: userPosition.latitude,
                         userLong: userPosition.longitude,
-                        status: 'Pending',
+                        status: getOrderStatusName(OrderStatus.onTheWay),
                         createdAt: DateTime.now(),
-                        deliveryId: '1',
-                        deliveryName: 'Ahmed',
-                        deliveryPhone: '01128861472',
-                        deliveryLat: 1111,
-                        deliveryLong: 11111,
+
                         coffees: [],
                       );
                       context.read<OrderCubit>().addOrder(order);

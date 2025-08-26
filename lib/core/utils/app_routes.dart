@@ -1,4 +1,5 @@
 import '../../features/delevery/presentation/view/delievery_view.dart';
+import '../../features/layout/presentation/views/layout_view.dart';
 import '../../features/order/presentation/views/track_order_map_view.dart';
 import '../../features/splash/presentation/view/splash_view.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,12 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case DelieveryView.routeName:
       return PageRouteBuilder(
         pageBuilder: (_, _, _) => const DelieveryView(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(opacity: animation, child: child),
+      );
+    case LayoutView.routeName:
+      return PageRouteBuilder(
+        pageBuilder: (_, _, _) => const LayoutView(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             FadeTransition(opacity: animation, child: child),
       );

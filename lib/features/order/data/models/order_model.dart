@@ -11,11 +11,11 @@ class OrderModel {
   final double userLong;
   final String status;
   final DateTime createdAt;
-  final String deliveryId;
-  final String deliveryName;
-  final String deliveryPhone;
-  final double deliveryLat;
-  final double deliveryLong;
+  final String? deliveryId;
+  final String? deliveryName;
+  final String? deliveryPhone;
+  final double? deliveryLat;
+  final double? deliveryLong;
   final List<CoffeeModel> coffees;
 
   OrderModel({
@@ -27,11 +27,11 @@ class OrderModel {
     required this.userLong,
     required this.status,
     required this.createdAt,
-    required this.deliveryId,
-    required this.deliveryName,
-    required this.deliveryPhone,
-    required this.deliveryLat,
-    required this.deliveryLong,
+      this.deliveryId,
+      this.deliveryName,
+      this.deliveryPhone,
+      this.deliveryLat,
+      this.deliveryLong,
     required this.coffees,
   });
 

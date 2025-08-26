@@ -19,9 +19,9 @@ class DeliveryOrderItem extends StatelessWidget {
           ? AppColors.primary
           : order.status == getOrderStatusName(OrderStatus.pending)
           ? Colors.blueGrey
-          : order.status == getOrderStatusName(OrderStatus.accepted)
-          ? Colors.green
-          : Colors.red,
+          : order.status == getOrderStatusName(OrderStatus.rejected)
+          ? Colors.red
+          : Colors.green,
       borderRadius: BorderRadius.circular(8.r),
     );
     return GestureDetector(

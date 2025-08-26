@@ -10,16 +10,12 @@ class HomeView extends StatelessWidget {
   static const routeName = 'home_view';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => injector<CoffeCubit>()..getCoffees(),
-          ),
-          BlocProvider(create: (context) => injector<CoffeSearchBloc>()),
-        ],
-        child: HomeViewBody(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => injector<CoffeCubit>()..getCoffees()),
+        BlocProvider(create: (context) => injector<CoffeSearchBloc>()),
+      ],
+      child: HomeViewBody(),
     );
   }
 }

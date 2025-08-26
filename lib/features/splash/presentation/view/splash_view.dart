@@ -1,4 +1,4 @@
-import 'package:coffe_shop/features/delevery/presentation/view/delievery_view.dart';
+import 'package:coffe_shop/features/layout/presentation/views/layout_view.dart';
 
 import '../../../../core/extensions/mediaquery_size.dart';
 import '../../../../core/extensions/padding_extension.dart';
@@ -6,7 +6,6 @@ import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_styles.dart';
 import '../../../../core/widgets/default_app_button.dart';
-import '../../../home/presentation/view/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -56,6 +55,6 @@ class SplashView extends StatelessWidget {
   }
 
   void _goToHomeScreen(BuildContext context) {
-    Navigator.pushNamed(context, DelieveryView.routeName);
+    Navigator.pushNamed(context, LayoutView.routeName);
   }
 }
