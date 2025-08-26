@@ -14,6 +14,16 @@ class DeliveryOrderItem extends StatelessWidget {
   final OrderModel order;
   @override
   Widget build(BuildContext context) {
+    var boxDecoration = BoxDecoration(
+      color: order.status == getOrderStatusName(OrderStatus.onTheWay)
+          ? AppColors.primary
+          : order.status == getOrderStatusName(OrderStatus.pending)
+          ? Colors.blueGrey
+          : order.status == getOrderStatusName(OrderStatus.accepted)
+          ? Colors.green
+          : Colors.red,
+      borderRadius: BorderRadius.circular(8.r),
+    );
     return GestureDetector(
       onLongPress: () {
         _makePhoneCall('01552630695');
@@ -59,16 +69,7 @@ class DeliveryOrderItem extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 8.w),
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                  decoration: BoxDecoration(
-                    color:
-                        order.status == getOrderStatusName(OrderStatus.onTheWay)
-                        ? AppColors.primary
-                        : order.status ==
-                              getOrderStatusName(OrderStatus.pending)
-                        ? Colors.blueGrey
-                        : Colors.green,
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
+                  decoration: boxDecoration,
                   child: Text(
                     order.status,
                     style: AppStyles.medium16.copyWith(color: AppColors.light),
@@ -148,7 +149,7 @@ class DeliveryOrderItem extends StatelessWidget {
     );
   }
 
- Future<void> _makePhoneCall(String phoneNumber) async {
+  Future<void> _makePhoneCall(String phoneNumber) async {
     final Uri uri = Uri(scheme: 'tel', path: phoneNumber);
 
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
