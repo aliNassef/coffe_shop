@@ -1,4 +1,7 @@
 import 'package:coffe_shop/core/repo/user_repo.dart';
+import 'package:coffe_shop/features/delevery/data/repo/delievery_repo.dart';
+import 'package:coffe_shop/features/delevery/data/repo/delievery_repo_impl.dart';
+import 'package:coffe_shop/features/delevery/presentation/controller/cubit/delivery_cubit.dart';
 
 import '../../features/order/presentation/controller/order_cubit/order_cubit.dart';
 import '../helpers/firestore_helper.dart';
@@ -22,6 +25,14 @@ void setupServiceLocator() async {
   _setupHomeFeature();
   _setupUserFeature();
   _setupOrderFeature();
+  _setupDeleveryFeature();
+}
+
+void _setupDeleveryFeature() {
+  injector.registerLazySingleton<DelieveryRepo>(
+    () => DelieveryRepoImpl(firestoreHelper: injector<FirestoreHelper>()),
+  );
+  injector.registerFactory(() => DeliveryCubit(injector<DelieveryRepo>()));
 }
 
 void _setupOrderFeature() {

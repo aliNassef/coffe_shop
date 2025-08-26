@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../../home/data/model/coffe_model.dart';
 
 class OrderModel {
@@ -42,7 +44,7 @@ class OrderModel {
       userLat: (json['userLat'] ?? 0).toDouble(),
       userLong: (json['userLong'] ?? 0).toDouble(),
       status: json['status'] ?? 'pending',
-      createdAt: (json['createdAt'] as DateTime),
+      createdAt: (json['createdAt'] as Timestamp).toDate(),
       deliveryId: json['deliveryId'] ?? '',
       deliveryName: json['deliveryName'] ?? '',
       deliveryPhone: json['deliveryPhone'] ?? '',
@@ -70,5 +72,13 @@ class OrderModel {
       'deliveryLong': deliveryLong,
       'coffees': coffees.map((c) => c.toJson()).toList(),
     };
+  }
+
+  double calcTotalPrice() {
+    double totalPrice = 0;
+    for (var coffee in coffees) {
+      totalPrice += coffee.price;
+    }
+    return totalPrice;
   }
 }

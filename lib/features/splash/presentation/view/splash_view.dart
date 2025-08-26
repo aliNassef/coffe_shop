@@ -1,3 +1,5 @@
+import 'package:coffe_shop/features/delevery/presentation/view/delievery_view.dart';
+
 import '../../../../core/extensions/mediaquery_size.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/utils/app_assets.dart';
@@ -20,7 +22,6 @@ class SplashView extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(AppImages.onBoardingImage),
-
             fit: BoxFit.cover,
           ),
         ),
@@ -55,6 +56,6 @@ class SplashView extends StatelessWidget {
   }
 
   void _goToHomeScreen(BuildContext context) {
-    Navigator.pushNamed(context, HomeView.routeName);
+    Navigator.pushNamed(context, DelieveryView.routeName);
   }
 }
