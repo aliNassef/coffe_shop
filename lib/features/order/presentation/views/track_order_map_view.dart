@@ -23,23 +23,51 @@ class TrackOrderMapView extends StatefulWidget {
 }
 
 class _TrackOrderMapViewState extends State<TrackOrderMapView> {
-  late GoogleMapController mapController;
+  late GoogleMapController _mapController;
   bool isMapReady = false;
   late PolylinePoints polylinePoints;
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
   Position? userPosition;
+  LatLng? orderPosition;
+  late StreamSubscription<Position?>? _positionSubscription;
 
   @override
   void initState() {
     super.initState();
     context.read<UserCubit>().getUserCoardinate();
     polylinePoints = PolylinePoints(apiKey: Env.mapsApiKey);
+    _listenOnOrder();
+  }
+
+  void _listenOnOrder() {
+    orderPosition = LatLng(
+      widget.order.deliveryLat!,
+      widget.order.deliveryLong!,
+    );
+    _positionSubscription = Geolocator.getPositionStream().listen((position) {
+      if (mounted) {
+        setState(() {
+          orderPosition = LatLng(position.latitude, position.longitude);
+        });
+        final distance = Geolocator.distanceBetween(
+          userPosition!.latitude,
+          userPosition!.longitude,
+          orderPosition!.latitude,
+          orderPosition!.longitude,
+        );
+        // if (distance < 100) {
+        //   Navigator.pop(context);
+        // }
+        _getPolyLine();
+      }
+    });
   }
 
   @override
   void dispose() {
-    mapController.dispose();
+    _positionSubscription?.cancel();
+    _mapController.dispose();
     super.dispose();
   }
 
@@ -80,7 +108,7 @@ class _TrackOrderMapViewState extends State<TrackOrderMapView> {
                 polylines: Set<Polyline>.of(polylines.values),
                 markers: getMarkers,
                 onMapCreated: (GoogleMapController controller) {
-                  mapController = controller;
+                  _mapController = controller;
                   setState(() {
                     isMapReady = true;
                   });
@@ -93,7 +121,7 @@ class _TrackOrderMapViewState extends State<TrackOrderMapView> {
                 left: 16.w,
                 child: isMapReady
                     ? TrackOrderMapTopBar(
-                        mapController: mapController,
+                        mapController: _mapController,
                         userPosition: userPosition!,
                       )
                     : const SizedBox.shrink(),
@@ -117,7 +145,7 @@ class _TrackOrderMapViewState extends State<TrackOrderMapView> {
         icon: AssetMapBitmap(AppImages.bike, height: 30.h, width: 30.w),
         infoWindow: const InfoWindow(title: 'delivery Location'),
         markerId: const MarkerId('2'),
-        position: LatLng(widget.order.deliveryLat!, widget.order.deliveryLong!),
+        position: LatLng(orderPosition!.latitude, orderPosition!.longitude),
       ),
     };
   }
@@ -142,8 +170,8 @@ class _TrackOrderMapViewState extends State<TrackOrderMapView> {
       request: RoutesApiRequest(
         origin: PointLatLng(userPosition!.latitude, userPosition!.longitude),
         destination: PointLatLng(
-          widget.order.deliveryLat!,
-          widget.order.deliveryLong!,
+          orderPosition!.latitude,
+          orderPosition!.longitude,
         ),
         travelMode: TravelMode.driving,
       ),
