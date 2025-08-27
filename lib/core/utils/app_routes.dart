@@ -1,3 +1,5 @@
+import 'package:coffe_shop/features/order/data/models/order_model.dart';
+
 import '../../features/delevery/presentation/view/delievery_view.dart';
 import '../../features/layout/presentation/views/layout_view.dart';
 import '../../features/order/presentation/views/track_order_map_view.dart';
@@ -42,8 +44,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
             FadeTransition(opacity: animation, child: child),
       );
     case TrackOrderMapView.routeName:
+      final order = settings.arguments as OrderModel;
       return PageRouteBuilder(
-        pageBuilder: (_, _, _) => const TrackOrderMapView(),
+        pageBuilder: (_, _, _) => TrackOrderMapView(order: order),
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             FadeTransition(opacity: animation, child: child),
       );

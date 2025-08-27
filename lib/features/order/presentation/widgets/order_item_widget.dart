@@ -1,3 +1,6 @@
+import 'package:coffe_shop/core/widgets/default_app_button.dart';
+import 'package:coffe_shop/features/order/presentation/views/track_order_map_view.dart';
+
 import '../../data/models/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -136,6 +139,18 @@ class OrderItemWidget extends StatelessWidget {
             ),
           ),
           Gap(16),
+          Visibility(
+            child: DefaultAppButton(
+              text: 'Track Your Order',
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  TrackOrderMapView.routeName,
+                  arguments: order,
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

@@ -36,7 +36,7 @@ class TrackOrderMapTopBar extends StatelessWidget {
               CameraUpdate.newCameraPosition(
                 CameraPosition(
                   target: LatLng(userPosition.latitude, userPosition.longitude),
-                  zoom: 14.4746,
+                  zoom: 16,
                 ),
               ),
             );
