@@ -1,6 +1,6 @@
-import 'package:coffe_shop/core/di/service_locator.dart';
-import 'package:coffe_shop/core/utils/app_colors.dart';
-import 'package:coffe_shop/features/delevery/presentation/controller/cubit/delivery_cubit.dart';
+import '../../../../core/di/service_locator.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../controller/cubit/delivery_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

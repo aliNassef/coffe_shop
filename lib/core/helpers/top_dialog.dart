@@ -1,6 +1,6 @@
-import 'package:coffe_shop/core/utils/app_colors.dart';
-import 'package:coffe_shop/core/utils/app_styles.dart';
-import 'package:coffe_shop/features/order/presentation/views/track_order_map_view.dart';
+import '../utils/app_colors.dart';
+import '../utils/app_styles.dart';
+import '../../features/order/presentation/views/track_order_map_view.dart';
 import 'package:flutter/material.dart';
 
 void showTopDialogWithButton(BuildContext context) {

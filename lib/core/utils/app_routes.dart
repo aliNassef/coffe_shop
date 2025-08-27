@@ -9,6 +9,7 @@ import '../../features/home/presentation/view/coffe_details_view.dart';
 import '../../features/home/presentation/view/home_view.dart';
 import '../../features/order/presentation/views/order_view.dart';
 import '../../features/order/presentation/views/pick_address_view.dart';
+import '../widgets/custom_no_internet_widget.dart';
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -55,6 +56,12 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case LayoutView.routeName:
       return PageRouteBuilder(
         pageBuilder: (_, _, _) => const LayoutView(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(opacity: animation, child: child),
+      );
+    case CustomNoInternetWidget.routeName:
+      return PageRouteBuilder(
+        pageBuilder: (_, _, _) => const CustomNoInternetWidget(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             FadeTransition(opacity: animation, child: child),
       );

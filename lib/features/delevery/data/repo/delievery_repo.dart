@@ -1,4 +1,4 @@
-import 'package:coffe_shop/features/order/data/models/order_model.dart';
+import '../../../order/data/models/order_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/helpers/failure.dart';

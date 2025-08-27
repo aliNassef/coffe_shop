@@ -1,7 +1,7 @@
-import 'package:coffe_shop/core/helpers/failure.dart';
-import 'package:coffe_shop/features/delevery/data/model/deleivery_model.dart';
+import '../../../../core/helpers/failure.dart';
+import '../model/deleivery_model.dart';
 
-import 'package:coffe_shop/features/order/data/models/order_model.dart';
+import '../../../order/data/models/order_model.dart';
 
 import 'package:dartz/dartz.dart';
 

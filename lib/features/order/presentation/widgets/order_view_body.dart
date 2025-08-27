@@ -1,6 +1,6 @@
-import 'package:coffe_shop/core/helpers/order_status_enum.dart';
-import 'package:coffe_shop/features/home/data/model/coffe_model.dart';
-import 'package:coffe_shop/features/order/data/models/order_model.dart';
+import '../../../../core/helpers/order_status_enum.dart';
+import '../../../home/data/model/coffe_model.dart';
+import '../../data/models/order_model.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../../../core/extensions/mediaquery_size.dart';
 import '../../../../core/helpers/top_dialog.dart';

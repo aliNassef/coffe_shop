@@ -1,5 +1,5 @@
-import 'package:coffe_shop/core/helpers/order_status_enum.dart';
-import 'package:coffe_shop/features/order/data/models/order_model.dart';
+import '../../../../core/helpers/order_status_enum.dart';
+import '../../../order/data/models/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';

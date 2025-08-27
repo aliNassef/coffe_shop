@@ -1,7 +1,7 @@
-import 'package:coffe_shop/core/repo/user_repo.dart';
-import 'package:coffe_shop/features/delevery/data/repo/delievery_repo.dart';
-import 'package:coffe_shop/features/delevery/data/repo/delievery_repo_impl.dart';
-import 'package:coffe_shop/features/delevery/presentation/controller/cubit/delivery_cubit.dart';
+import '../repo/user_repo.dart';
+import '../../features/delevery/data/repo/delievery_repo.dart';
+import '../../features/delevery/data/repo/delievery_repo_impl.dart';
+import '../../features/delevery/presentation/controller/cubit/delivery_cubit.dart';
 
 import '../../features/order/presentation/controller/order_cubit/order_cubit.dart';
 import '../helpers/firestore_helper.dart';

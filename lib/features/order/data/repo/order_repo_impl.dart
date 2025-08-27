@@ -1,5 +1,5 @@
-import 'package:coffe_shop/core/helpers/firestore_helper.dart';
-import 'package:coffe_shop/features/order/data/models/order_model.dart';
+import '../../../../core/helpers/firestore_helper.dart';
+import '../models/order_model.dart';
 
 import '../../../../core/helpers/failure.dart';
 

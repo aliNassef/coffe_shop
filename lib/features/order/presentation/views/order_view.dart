@@ -1,5 +1,5 @@
-import 'package:coffe_shop/core/di/service_locator.dart';
-import 'package:coffe_shop/features/order/presentation/controller/order_cubit/order_cubit.dart';
+import '../../../../core/di/service_locator.dart';
+import '../controller/order_cubit/order_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/extensions/padding_extension.dart';

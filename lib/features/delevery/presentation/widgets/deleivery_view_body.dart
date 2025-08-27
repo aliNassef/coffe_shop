@@ -1,6 +1,6 @@
-import 'package:coffe_shop/core/widgets/custom_failure_widget.dart';
-import 'package:coffe_shop/features/delevery/presentation/controller/cubit/delivery_cubit.dart';
-import 'package:coffe_shop/features/order/data/models/order_model.dart';
+import '../../../../core/widgets/custom_failure_widget.dart';
+import '../controller/cubit/delivery_cubit.dart';
+import '../../../order/data/models/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

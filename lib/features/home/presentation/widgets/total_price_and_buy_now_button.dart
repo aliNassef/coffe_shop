@@ -1,4 +1,4 @@
-import 'package:coffe_shop/features/home/data/model/coffe_model.dart';
+import '../../data/model/coffe_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

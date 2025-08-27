@@ -1,4 +1,4 @@
-import 'package:coffe_shop/features/layout/presentation/views/layout_view.dart';
+import '../../../layout/presentation/views/layout_view.dart';
 
 import '../../../../core/extensions/mediaquery_size.dart';
 import '../../../../core/extensions/padding_extension.dart';

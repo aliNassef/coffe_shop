@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:coffe_shop/features/delevery/data/repo/delievery_repo.dart';
-import 'package:coffe_shop/features/order/data/models/order_model.dart';
+import '../../../data/repo/delievery_repo.dart';
+import '../../../../order/data/models/order_model.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../data/model/deleivery_model.dart';

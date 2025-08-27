@@ -1,5 +1,5 @@
-import 'package:coffe_shop/core/helpers/failure.dart';
-import 'package:coffe_shop/core/repo/user_repo.dart';
+import '../helpers/failure.dart';
+import 'user_repo.dart';
 import 'package:dartz/dartz.dart';
 import 'package:geolocator/geolocator.dart';
 
