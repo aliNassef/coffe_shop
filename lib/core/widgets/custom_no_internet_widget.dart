@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class CustomNoInternetWidget extends StatelessWidget {
   const CustomNoInternetWidget({super.key});
@@ -11,12 +12,11 @@ class CustomNoInternetWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(Icons.wifi_off, size: 100, color: Colors.grey),
-            const SizedBox(height: 20),
+            const Gap(20),
             const Text('No Internet Connection'),
-            const SizedBox(height: 10),
+            const Gap(10),
             const Text(
               'Please check your internet connection and try again.',
-
               textAlign: TextAlign.center,
             ),
           ],

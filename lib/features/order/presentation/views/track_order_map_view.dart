@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/widgets/custom_failure_widget.dart';
@@ -26,7 +25,6 @@ class TrackOrderMapView extends StatefulWidget {
 class _TrackOrderMapViewState extends State<TrackOrderMapView> {
   late GoogleMapController mapController;
   bool isMapReady = false;
-  Set<Marker> markers = <Marker>{};
   late PolylinePoints polylinePoints;
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
@@ -69,7 +67,6 @@ class _TrackOrderMapViewState extends State<TrackOrderMapView> {
               child: CircularProgressIndicator(color: AppColors.primary),
             );
           }
-
           return Stack(
             children: [
               GoogleMap(
@@ -81,34 +78,7 @@ class _TrackOrderMapViewState extends State<TrackOrderMapView> {
                   zoom: 16,
                 ),
                 polylines: Set<Polyline>.of(polylines.values),
-                markers: {
-                  Marker(
-                    icon: AssetMapBitmap(
-                      AppImages.location,
-                      height: 30.h,
-                      width: 30.w,
-                    ),
-                    infoWindow: const InfoWindow(title: 'My Location'),
-                    markerId: const MarkerId('1'),
-                    position: LatLng(
-                      userPosition!.latitude,
-                      userPosition!.longitude,
-                    ),
-                  ),
-                  Marker(
-                    icon: AssetMapBitmap(
-                      AppImages.bike,
-                      height: 30.h,
-                      width: 30.w,
-                    ),
-                    infoWindow: const InfoWindow(title: 'delivery Location'),
-                    markerId: const MarkerId('2'),
-                    position: LatLng(
-                      widget.order.deliveryLat!,
-                      widget.order.deliveryLong!,
-                    ),
-                  ),
-                },
+                markers: getMarkers,
                 onMapCreated: (GoogleMapController controller) {
                   mapController = controller;
                   setState(() {
@@ -133,6 +103,23 @@ class _TrackOrderMapViewState extends State<TrackOrderMapView> {
         },
       ),
     );
+  }
+
+  Set<Marker> get getMarkers {
+    return {
+      Marker(
+        icon: AssetMapBitmap(AppImages.location, height: 30.h, width: 30.w),
+        infoWindow: const InfoWindow(title: 'My Location'),
+        markerId: const MarkerId('1'),
+        position: LatLng(userPosition!.latitude, userPosition!.longitude),
+      ),
+      Marker(
+        icon: AssetMapBitmap(AppImages.bike, height: 30.h, width: 30.w),
+        infoWindow: const InfoWindow(title: 'delivery Location'),
+        markerId: const MarkerId('2'),
+        position: LatLng(widget.order.deliveryLat!, widget.order.deliveryLong!),
+      ),
+    };
   }
 
   void _addPolyLine() {

@@ -1,3 +1,5 @@
+import 'package:coffe_shop/core/controller/cubit/internet_connection_cubit.dart';
+
 import '../repo/user_repo.dart';
 import '../../features/delevery/data/repo/delievery_repo.dart';
 import '../../features/delevery/data/repo/delievery_repo_impl.dart';
@@ -54,6 +56,9 @@ void _setupUserFeature() {
 void _setupExternal() {
   injector.registerLazySingleton<FirestoreHelper>(() => FirestoreHelper());
   injector.registerLazySingleton<LocationHelper>(() => LocationHelper());
+  injector.registerFactory<InternetConnectionCubit>(
+    () => InternetConnectionCubit(),
+  );
 }
 
 void _setupHomeFeature() {
