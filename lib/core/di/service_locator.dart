@@ -1,5 +1,6 @@
 import 'package:coffe_shop/core/controller/cubit/internet_connection_cubit.dart';
 
+import '../../features/order/presentation/controller/bloc/get_order_position_bloc.dart';
 import '../repo/user_repo.dart';
 import '../../features/delevery/data/repo/delievery_repo.dart';
 import '../../features/delevery/data/repo/delievery_repo_impl.dart';
@@ -42,6 +43,7 @@ void _setupOrderFeature() {
     () => OrderRepoImpl(firestoreHelper: injector<FirestoreHelper>()),
   );
   injector.registerFactory(() => OrderCubit(injector<OrderRepo>()));
+  injector.registerFactory(() => GetOrderPositionBloc(injector<OrderRepo>()));
 }
 
 void _setupUserFeature() {

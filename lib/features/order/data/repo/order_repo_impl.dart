@@ -1,3 +1,5 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import '../../../../core/helpers/firestore_helper.dart';
 import '../models/order_model.dart';
 
@@ -28,6 +30,18 @@ class OrderRepoImpl extends OrderRepo {
     try {
       final orders = await _firestoreHelper.getAllOrders();
       return Right(orders);
+    } catch (e) {
+      return Left(Failure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, LatLng>> getDeliveryPosition({
+    required String orderId,
+  }) async {
+    try {
+      final order = await _firestoreHelper.getOrderById(orderId);
+      return Right(LatLng(order!.deliveryLat!, order.deliveryLong!));
     } catch (e) {
       return Left(Failure(errMessage: e.toString()));
     }

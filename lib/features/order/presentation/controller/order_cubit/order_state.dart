@@ -38,3 +38,21 @@ final class AddorderFailed extends OrderState {
 }
 
 final class AddorderSuccess extends OrderState {}
+
+final class GetOrderPositonLoading extends OrderState {}
+
+final class GetOrderPositonLoaded extends OrderState {
+  final LatLng position;
+  const GetOrderPositonLoaded({required this.position});
+
+  @override
+  List<Object> get props => [position];
+}
+
+final class GetOrderPositonFailure extends OrderState {
+  final String errMessage;
+  const GetOrderPositonFailure({required this.errMessage});
+
+  @override
+  List<Object> get props => [errMessage];
+}

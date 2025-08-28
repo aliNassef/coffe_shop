@@ -1,3 +1,5 @@
+import 'package:coffe_shop/core/utils/app_colors.dart';
+
 import '../../../../core/widgets/custom_failure_widget.dart';
 import '../controller/order_cubit/order_cubit.dart';
 import 'package:flutter/material.dart';
@@ -29,12 +31,19 @@ class UserOrdersViewBody extends StatelessWidget {
           return CustomFailureWidget(errMessage: state.errMessage);
         }
         if (state is GetUserOrdersSuccess) {
-          return ListView.separated(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-            itemBuilder: (context, index) =>
-                OrderItemWidget(order: state.orders[index]),
-            separatorBuilder: (context, index) => const Gap(16),
-            itemCount: state.orders.length,
+          return RefreshIndicator(
+            color: AppColors.primary,
+            onRefresh: () async {
+              context.read<OrderCubit>().getUserOrders();
+            },
+            child: ListView.separated(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+              itemBuilder: (context, index) =>
+                  OrderItemWidget(order: state.orders[index]),
+              separatorBuilder: (context, index) => const Gap(16),
+              itemCount: state.orders.length,
+            ),
           );
         }
         return const SizedBox.shrink();

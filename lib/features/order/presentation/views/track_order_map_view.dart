@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:developer';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/widgets/custom_failure_widget.dart';
 import '../../../../env/env.dart';
 import '../../data/models/order_model.dart';
+import '../controller/bloc/get_order_position_bloc.dart';
 import '../controller/user_cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,105 +32,99 @@ class _TrackOrderMapViewState extends State<TrackOrderMapView> {
   List<LatLng> polylineCoordinates = [];
   Position? userPosition;
   LatLng? orderPosition;
-  late StreamSubscription<Position?>? _positionSubscription;
-
+  late Timer _timer;
   @override
   void initState() {
     super.initState();
     context.read<UserCubit>().getUserCoardinate();
-    polylinePoints = PolylinePoints(apiKey: Env.mapsApiKey);
-    _listenOnOrder();
-  }
-
-  void _listenOnOrder() {
-    orderPosition = LatLng(
-      widget.order.deliveryLat!,
-      widget.order.deliveryLong!,
+    context.read<GetOrderPositionBloc>().add(
+      GetOrderPosition(orderId: widget.order.orderId),
     );
-    _positionSubscription = Geolocator.getPositionStream().listen((position) {
-      if (mounted) {
-        setState(() {
-          orderPosition = LatLng(position.latitude, position.longitude);
-        });
-        final distance = Geolocator.distanceBetween(
-          userPosition!.latitude,
-          userPosition!.longitude,
-          orderPosition!.latitude,
-          orderPosition!.longitude,
-        );
-        // if (distance < 100) {
-        //   Navigator.pop(context);
-        // }
-        _getPolyLine();
-      }
+    polylinePoints = PolylinePoints(apiKey: Env.mapsApiKey);
+
+    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      context.read<GetOrderPositionBloc>().add(
+        GetOrderPosition(orderId: widget.order.orderId),
+      );
     });
   }
 
   @override
   void dispose() {
-    _positionSubscription?.cancel();
     _mapController.dispose();
+    _timer.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<UserCubit, UserState>(
-        buildWhen: (previous, current) =>
-            current is GetuserPositonLoadedState ||
-            current is GetuserPositonFailed ||
-            current is GetuserPositonLoadingState,
-        listenWhen: (previous, current) => current is GetuserPositonLoadedState,
+      body: BlocListener<GetOrderPositionBloc, GetOrderPositionState>(
         listener: (context, state) {
-          if (state is GetuserPositonLoadedState) {
-            userPosition = state.position;
+          if (state is GetOrderPositionLoaded) {
+            orderPosition = state.position;
             _getPolyLine();
           }
         },
-        builder: (context, state) {
-          if (state is GetuserPositonFailed) {
-            return CustomFailureWidget(errMessage: state.error);
-          }
-          if (userPosition == null) {
-            return const Center(
-              child: CircularProgressIndicator(color: AppColors.primary),
-            );
-          }
-          return Stack(
-            children: [
-              GoogleMap(
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                    userPosition!.latitude,
-                    userPosition!.longitude,
+        child: BlocConsumer<UserCubit, UserState>(
+          buildWhen: (previous, current) =>
+              current is GetuserPositonLoadedState ||
+              current is GetuserPositonFailed ||
+              current is GetuserPositonLoadingState,
+          listenWhen: (previous, current) =>
+              current is GetuserPositonLoadedState,
+          listener: (context, state) {
+            if (state is GetuserPositonLoadedState) {
+              userPosition = state.position;
+              log(' order position: $orderPosition');
+              log(' order position: $userPosition');
+              _getPolyLine();
+            }
+          },
+          builder: (context, state) {
+            if (state is GetuserPositonFailed) {
+              return CustomFailureWidget(errMessage: state.error);
+            }
+            if (userPosition == null) {
+              return const Center(
+                child: CircularProgressIndicator(color: AppColors.primary),
+              );
+            }
+            return Stack(
+              children: [
+                GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(
+                      userPosition!.latitude,
+                      userPosition!.longitude,
+                    ),
+                    zoom: 16,
                   ),
-                  zoom: 16,
+                  polylines: Set<Polyline>.of(polylines.values),
+                  markers: getMarkers,
+                  onMapCreated: (GoogleMapController controller) {
+                    _mapController = controller;
+                    setState(() {
+                      isMapReady = true;
+                    });
+                  },
+                  mapType: MapType.normal,
                 ),
-                polylines: Set<Polyline>.of(polylines.values),
-                markers: getMarkers,
-                onMapCreated: (GoogleMapController controller) {
-                  _mapController = controller;
-                  setState(() {
-                    isMapReady = true;
-                  });
-                },
-                mapType: MapType.normal,
-              ),
-              Positioned(
-                top: 50.h,
-                right: 16.w,
-                left: 16.w,
-                child: isMapReady
-                    ? TrackOrderMapTopBar(
-                        mapController: _mapController,
-                        userPosition: userPosition!,
-                      )
-                    : const SizedBox.shrink(),
-              ),
-            ],
-          );
-        },
+                Positioned(
+                  top: 50.h,
+                  right: 16.w,
+                  left: 16.w,
+                  child: isMapReady
+                      ? TrackOrderMapTopBar(
+                          mapController: _mapController,
+                          userPosition: userPosition!,
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
