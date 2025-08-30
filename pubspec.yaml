@@ -41,6 +41,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
+  # flutter_dotenv: ^6.0.0
   flutter_polyline_points: ^3.0.1
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.2.0
@@ -51,12 +52,12 @@ dependencies:
   get_it: ^8.2.0
   google_fonts: ^6.3.0
   google_maps_flutter: ^2.12.3
+  internet_connection_checker_plus: ^2.7.2
   place_picker_google: ^0.0.20
   rxdart: ^0.28.0
   sentry_flutter: ^9.6.0
   skeletonizer: ^2.1.0+1
   url_launcher: ^6.3.2
-  internet_connection_checker_plus: ^2.7.2
 
 dev_dependencies:
   bloc_test: ^10.0.0

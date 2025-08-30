@@ -6,12 +6,14 @@
 import 'dart:async' as _i4;
 
 import 'package:coffe_shop/core/helpers/firestore_helper.dart' as _i3;
-import 'package:coffe_shop/core/helpers/location_helper.dart' as _i7;
+import 'package:coffe_shop/core/helpers/location_helper.dart' as _i8;
+import 'package:coffe_shop/features/delevery/data/model/deleivery_model.dart'
+    as _i7;
 import 'package:coffe_shop/features/home/data/model/coffe_model.dart' as _i6;
 import 'package:coffe_shop/features/order/data/models/order_model.dart' as _i5;
 import 'package:geolocator/geolocator.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i8;
+import 'package:mockito/src/dummies.dart' as _i9;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -94,12 +96,35 @@ class MockFirestoreHelper extends _i1.Mock implements _i3.FirestoreHelper {
             ),
           )
           as _i4.Future<List<_i6.CoffeeModel>>);
+
+  @override
+  _i4.Stream<List<_i5.OrderModel>> getOrdersStream() =>
+      (super.noSuchMethod(
+            Invocation.method(#getOrdersStream, []),
+            returnValue: _i4.Stream<List<_i5.OrderModel>>.empty(),
+          )
+          as _i4.Stream<List<_i5.OrderModel>>);
+
+  @override
+  _i4.Future<void> acceptOrder({
+    required _i7.DeleiveryModel? deleveryModel,
+    required String? orderId,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#acceptOrder, [], {
+              #deleveryModel: deleveryModel,
+              #orderId: orderId,
+            }),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 }
 
 /// A class which mocks [LocationHelper].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLocationHelper extends _i1.Mock implements _i7.LocationHelper {
+class MockLocationHelper extends _i1.Mock implements _i8.LocationHelper {
   MockLocationHelper() {
     _i1.throwOnMissingStub(this);
   }
@@ -119,7 +144,7 @@ class MockLocationHelper extends _i1.Mock implements _i7.LocationHelper {
       (super.noSuchMethod(
             Invocation.method(#getCurrentLocation, []),
             returnValue: _i4.Future<String>.value(
-              _i8.dummyValue<String>(
+              _i9.dummyValue<String>(
                 this,
                 Invocation.method(#getCurrentLocation, []),
               ),
