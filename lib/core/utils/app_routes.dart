@@ -1,4 +1,5 @@
 import 'package:coffe_shop/core/di/service_locator.dart';
+import 'package:coffe_shop/features/delevery/presentation/controller/cubit/delivery_cubit.dart';
 import 'package:coffe_shop/features/order/data/models/order_model.dart';
 import 'package:coffe_shop/features/order/presentation/controller/bloc/get_order_position_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,7 +80,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       final order = settings.arguments as OrderModel;
       return PageRouteBuilder(
         pageBuilder: (_, _, _) => BlocProvider(
-          create: (context) => injector<GetOrderPositionBloc>(),
+          create: (context) => injector<DeliveryCubit>(),
           child: DeliveryMapView(order: order),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>

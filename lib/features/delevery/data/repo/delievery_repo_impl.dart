@@ -39,4 +39,18 @@ class DelieveryRepoImpl extends DelieveryRepo {
       yield Left(Failure(errMessage: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> updateDeliveryLatLong({
+    required double lat,
+    required double long,
+    required String orderId,
+  }) async {
+    try {
+      await _firestoreHelper.updateDeliveryLatLong(lat, long, orderId);
+      return Right(null);
+    } catch (e) {
+      return Left(Failure(errMessage: e.toString()));
+    }
+  }
 }

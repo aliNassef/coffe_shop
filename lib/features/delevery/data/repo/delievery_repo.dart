@@ -6,6 +6,11 @@ import '../model/deleivery_model.dart';
 
 abstract class DelieveryRepo {
   Stream<Either<Failure, List<OrderModel>>> getDeliveryOrders();
+  Future<Either<Failure, void>> updateDeliveryLatLong({
+    required double lat,
+    required double long,
+    required String orderId,
+  });
   Future<Either<Failure, void>> actionOnOrder({
     required DeleiveryModel deleiveryModel,
     required String orderId,

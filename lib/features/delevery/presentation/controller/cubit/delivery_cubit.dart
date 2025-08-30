@@ -36,6 +36,18 @@ class DeliveryCubit extends Cubit<DeliveryState> {
     });
   }
 
+  void updateDeliveryLatLong({
+    required double lat,
+    required double long,
+    required String orderId,
+  }) async {
+    await _delieveryRepo.updateDeliveryLatLong(
+      lat: lat,
+      long: long,
+      orderId: orderId,
+    );
+  }
+
   @override
   Future<void> close() {
     _streamSubscription?.cancel();

@@ -1,21 +1,17 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:coffe_shop/features/order/data/models/order_model.dart';
-import 'package:coffe_shop/features/order/presentation/controller/user_cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
-import '../../../../core/widgets/custom_failure_widget.dart';
 import '../../../../env/env.dart';
-import '../../../order/presentation/controller/bloc/get_order_position_bloc.dart';
 import '../../../order/presentation/widgets/track_order_map_top_bar.dart';
+import '../controller/cubit/delivery_cubit.dart';
 
 class DeliveryMapView extends StatefulWidget {
   const DeliveryMapView({super.key, required this.order});
@@ -31,96 +27,58 @@ class _DeliveryMapViewState extends State<DeliveryMapView> {
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
   bool isMapReady = false;
-  late Timer _timer;
-  Position? userPosition;
   LatLng? orderPosition;
+  late StreamSubscription<Position> _positionStreamSubscription;
   @override
   void initState() {
     super.initState();
-    context.read<UserCubit>().getUserCoardinate();
-    context.read<GetOrderPositionBloc>().add(
-      GetOrderPosition(orderId: widget.order.orderId),
-    );
     polylinePoints = PolylinePoints(apiKey: Env.mapsApiKey);
-
-    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
-      context.read<GetOrderPositionBloc>().add(
-        GetOrderPosition(orderId: widget.order.orderId),
-      );
-    });
+    orderPosition = LatLng(
+      widget.order.deliveryLat!,
+      widget.order.deliveryLong!,
+    );
+    _getPolyLine();
+    _listenOrderPosition();
   }
 
   @override
   void dispose() {
     _mapController.dispose();
-    _timer.cancel();
+    _positionStreamSubscription.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<GetOrderPositionBloc, GetOrderPositionState>(
-        listener: (context, state) {
-          if (state is GetOrderPositionLoaded) {
-            orderPosition = state.position;
-            if (userPosition != null) _getPolyLine();
-          }
-        },
-        child: BlocConsumer<UserCubit, UserState>(
-          builder: (context, state) {
-            if (state is GetuserPositonFailed) {
-              return CustomFailureWidget(errMessage: state.error);
-            }
-            if (userPosition == null) {
-              return const Center(
-                child: CircularProgressIndicator(color: AppColors.primary),
-              );
-            }
-            return Stack(
-              children: [
-                GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(
-                      orderPosition!.latitude,
-                      orderPosition!.longitude,
-                    ),
-                    zoom: 15,
-                  ),
-                  polylines: Set<Polyline>.of(polylines.values),
-                  markers: getMarkers,
-                  onMapCreated: (GoogleMapController controller) {
-                    _mapController = controller;
-                    setState(() {
-                      isMapReady = true;
-                    });
-                  },
-                ),
-                Positioned(
-                  top: 50.h,
-                  right: 16.w,
-                  left: 16.w,
-                  child: isMapReady
-                      ? TrackOrderMapTopBar(
-                          mapController: _mapController,
-                          position: orderPosition!,
-                        )
-                      : const SizedBox.shrink(),
-                ),
-              ],
-            );
-          },
-          listenWhen: (previous, current) =>
-              current is GetuserPositonLoadedState,
-          listener: (context, state) {
-            if (state is GetuserPositonLoadedState) {
-              userPosition = state.position;
-              log(' order position: $orderPosition');
-              log(' order position: $userPosition');
-              if (orderPosition != null) _getPolyLine();
-            }
-          },
-        ),
+      body: Stack(
+        children: [
+          GoogleMap(
+            initialCameraPosition: CameraPosition(
+              target: LatLng(orderPosition!.latitude, orderPosition!.longitude),
+              zoom: 15,
+            ),
+            polylines: Set<Polyline>.of(polylines.values),
+            markers: getMarkers,
+            onMapCreated: (GoogleMapController controller) {
+              _mapController = controller;
+              setState(() {
+                isMapReady = true;
+              });
+            },
+          ),
+          Positioned(
+            top: 50.h,
+            right: 16.w,
+            left: 16.w,
+            child: isMapReady
+                ? TrackOrderMapTopBar(
+                    mapController: _mapController,
+                    position: orderPosition!,
+                  )
+                : const SizedBox.shrink(),
+          ),
+        ],
       ),
     );
   }
@@ -129,13 +87,13 @@ class _DeliveryMapViewState extends State<DeliveryMapView> {
     return {
       Marker(
         icon: AssetMapBitmap(AppImages.location, height: 30.h, width: 30.w),
-        infoWindow: const InfoWindow(title: 'My Location'),
+        infoWindow: const InfoWindow(title: 'User Location'),
         markerId: const MarkerId('1'),
-        position: LatLng(userPosition!.latitude, userPosition!.longitude),
+        position: LatLng(widget.order.userLat, widget.order.userLong),
       ),
       Marker(
         icon: AssetMapBitmap(AppImages.bike, height: 30.h, width: 30.w),
-        infoWindow: const InfoWindow(title: 'delivery Location'),
+        infoWindow: const InfoWindow(title: 'My Location'),
         markerId: const MarkerId('2'),
         position: LatLng(orderPosition!.latitude, orderPosition!.longitude),
       ),
@@ -160,7 +118,7 @@ class _DeliveryMapViewState extends State<DeliveryMapView> {
     polylines.clear();
     final result = await polylinePoints.getRouteBetweenCoordinatesV2(
       request: RoutesApiRequest(
-        origin: PointLatLng(userPosition!.latitude, userPosition!.longitude),
+        origin: PointLatLng(widget.order.userLat, widget.order.userLong),
         destination: PointLatLng(
           orderPosition!.latitude,
           orderPosition!.longitude,
@@ -175,5 +133,41 @@ class _DeliveryMapViewState extends State<DeliveryMapView> {
       }
       _addPolyLine();
     }
+  }
+
+  void _listenOrderPosition() async {
+    _positionStreamSubscription =
+        Geolocator.getPositionStream(
+          locationSettings: const LocationSettings(
+            accuracy: LocationAccuracy.high,
+            distanceFilter: 10,
+          ),
+        ).listen((position) {
+          setState(() {
+            orderPosition = LatLng(position.latitude, position.longitude);
+          });
+          _getPolyLine();
+          if (mounted) {
+            context.read<DeliveryCubit>().updateDeliveryLatLong(
+              lat: position.latitude,
+              long: position.longitude,
+              orderId: widget.order.orderId,
+            );
+
+            if (_diffDistance() < 100) {
+              log('order delivered');
+            }
+          }
+        });
+  }
+
+  double _diffDistance() {
+    final distance = Geolocator.distanceBetween(
+      widget.order.userLat,
+      widget.order.userLong,
+      orderPosition!.latitude,
+      orderPosition!.longitude,
+    );
+    return distance;
   }
 }

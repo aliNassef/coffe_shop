@@ -119,4 +119,15 @@ class FirestoreHelper {
       throw Exception('Error accepting order: $e');
     }
   }
+
+  Future<void> updateDeliveryLatLong(double lat, double long, String orderId) async {
+    try {
+      await _firestore.collection('orders').doc(orderId).update({
+        'deliveryLat': lat,
+        'deliveryLong': long,
+      });
+    } catch (e) {
+      throw Exception('Error updating delivery location: $e');
+    }
+  }
 }
