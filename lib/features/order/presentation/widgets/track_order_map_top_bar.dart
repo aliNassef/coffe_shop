@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/utils/app_colors.dart';
@@ -8,10 +7,10 @@ class TrackOrderMapTopBar extends StatelessWidget {
   const TrackOrderMapTopBar({
     super.key,
     required this.mapController,
-    required this.userPosition,
+    required this.position,
   });
   final GoogleMapController mapController;
-  final Position userPosition;
+  final LatLng? position;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -34,10 +33,7 @@ class TrackOrderMapTopBar extends StatelessWidget {
           onTap: () {
             mapController.animateCamera(
               CameraUpdate.newCameraPosition(
-                CameraPosition(
-                  target: LatLng(userPosition.latitude, userPosition.longitude),
-                  zoom: 16,
-                ),
+                CameraPosition(target: position!, zoom: 16),
               ),
             );
           },

@@ -1,3 +1,5 @@
+import 'package:coffe_shop/core/widgets/default_app_button.dart';
+
 import '../../../../core/helpers/order_status_enum.dart';
 import '../../../order/data/models/order_model.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_styles.dart';
+import '../view/delivery_map_view.dart';
 import 'accept_or_reject_order_button.dart';
 
 class DeliveryOrderItem extends StatelessWidget {
@@ -143,6 +146,13 @@ class DeliveryOrderItem extends StatelessWidget {
             ),
             Gap(16),
             AcceptorRejectOrderButton(order: order),
+            Gap(16),
+            DefaultAppButton(
+              text: 'Open Map',
+              onPressed: () {
+                _openMap(context);
+              },
+            ),
           ],
         ),
       ),
@@ -155,5 +165,9 @@ class DeliveryOrderItem extends StatelessWidget {
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $uri');
     }
+  }
+
+  void _openMap(BuildContext context) {
+    Navigator.pushNamed(context, DeliveryMapView.routeName, arguments: order);
   }
 }

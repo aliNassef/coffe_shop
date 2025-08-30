@@ -4,6 +4,7 @@ import 'package:coffe_shop/features/order/presentation/controller/bloc/get_order
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/delevery/presentation/view/delievery_view.dart';
+import '../../features/delevery/presentation/view/delivery_map_view.dart';
 import '../../features/layout/presentation/views/layout_view.dart';
 import '../../features/order/presentation/views/track_order_map_view.dart';
 import '../../features/splash/presentation/view/splash_view.dart';
@@ -71,6 +72,16 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case CustomNoInternetWidget.routeName:
       return PageRouteBuilder(
         pageBuilder: (_, _, _) => const CustomNoInternetWidget(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(opacity: animation, child: child),
+      );
+    case DeliveryMapView.routeName:
+      final order = settings.arguments as OrderModel;
+      return PageRouteBuilder(
+        pageBuilder: (_, _, _) => BlocProvider(
+          create: (context) => injector<GetOrderPositionBloc>(),
+          child: DeliveryMapView(order: order),
+        ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             FadeTransition(opacity: animation, child: child),
       );

@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
-        android:label="coffe_shop"
+        android:label="Coffee Shop"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
           <meta-data android:name="com.google.android.geo.API_KEY"

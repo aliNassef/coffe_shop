@@ -1,12 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
-import '../../../../core/utils/app_assets.dart';
-import '../../../../core/utils/app_colors.dart';
-import '../../../../core/widgets/custom_failure_widget.dart';
-import '../../../../env/env.dart';
-import '../../data/models/order_model.dart';
-import '../controller/bloc/get_order_position_bloc.dart';
-import '../controller/user_cubit/user_cubit.dart';
+
+import 'package:coffe_shop/features/order/data/models/order_model.dart';
+import 'package:coffe_shop/features/order/presentation/controller/user_cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -14,25 +10,30 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../widgets/track_order_map_top_bar.dart';
+import '../../../../core/utils/app_assets.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/widgets/custom_failure_widget.dart';
+import '../../../../env/env.dart';
+import '../../../order/presentation/controller/bloc/get_order_position_bloc.dart';
+import '../../../order/presentation/widgets/track_order_map_top_bar.dart';
 
-class TrackOrderMapView extends StatefulWidget {
-  const TrackOrderMapView({super.key, required this.order});
-  static const routeName = 'track-order-map';
+class DeliveryMapView extends StatefulWidget {
+  const DeliveryMapView({super.key, required this.order});
+  static const routeName = 'delivery-map';
   final OrderModel order;
   @override
-  State<TrackOrderMapView> createState() => _TrackOrderMapViewState();
+  State<DeliveryMapView> createState() => _DeliveryMapViewState();
 }
 
-class _TrackOrderMapViewState extends State<TrackOrderMapView> {
+class _DeliveryMapViewState extends State<DeliveryMapView> {
   late GoogleMapController _mapController;
-  bool isMapReady = false;
   late PolylinePoints polylinePoints;
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
+  bool isMapReady = false;
+  late Timer _timer;
   Position? userPosition;
   LatLng? orderPosition;
-  late Timer _timer;
   @override
   void initState() {
     super.initState();
@@ -67,20 +68,6 @@ class _TrackOrderMapViewState extends State<TrackOrderMapView> {
           }
         },
         child: BlocConsumer<UserCubit, UserState>(
-          buildWhen: (previous, current) =>
-              current is GetuserPositonLoadedState ||
-              current is GetuserPositonFailed ||
-              current is GetuserPositonLoadingState,
-          listenWhen: (previous, current) =>
-              current is GetuserPositonLoadedState,
-          listener: (context, state) {
-            if (state is GetuserPositonLoadedState) {
-              userPosition = state.position;
-              log(' order position: $orderPosition');
-              log(' order position: $userPosition');
-              _getPolyLine();
-            }
-          },
           builder: (context, state) {
             if (state is GetuserPositonFailed) {
               return CustomFailureWidget(errMessage: state.error);
@@ -95,10 +82,10 @@ class _TrackOrderMapViewState extends State<TrackOrderMapView> {
                 GoogleMap(
                   initialCameraPosition: CameraPosition(
                     target: LatLng(
-                      userPosition!.latitude,
-                      userPosition!.longitude,
+                      orderPosition!.latitude,
+                      orderPosition!.longitude,
                     ),
-                    zoom: 16,
+                    zoom: 15,
                   ),
                   polylines: Set<Polyline>.of(polylines.values),
                   markers: getMarkers,
@@ -108,7 +95,6 @@ class _TrackOrderMapViewState extends State<TrackOrderMapView> {
                       isMapReady = true;
                     });
                   },
-                  mapType: MapType.normal,
                 ),
                 Positioned(
                   top: 50.h,
@@ -117,15 +103,22 @@ class _TrackOrderMapViewState extends State<TrackOrderMapView> {
                   child: isMapReady
                       ? TrackOrderMapTopBar(
                           mapController: _mapController,
-                          position: LatLng(
-                            userPosition!.latitude,
-                            userPosition!.longitude,
-                          ),
+                          position: orderPosition!,
                         )
                       : const SizedBox.shrink(),
                 ),
               ],
             );
+          },
+          listenWhen: (previous, current) =>
+              current is GetuserPositonLoadedState,
+          listener: (context, state) {
+            if (state is GetuserPositonLoadedState) {
+              userPosition = state.position;
+              log(' order position: $orderPosition');
+              log(' order position: $userPosition');
+              if (orderPosition != null) _getPolyLine();
+            }
           },
         ),
       ),
