@@ -18,7 +18,7 @@ class OrderItemWidget extends StatelessWidget {
     var boxDecoration = BoxDecoration(
       color: order.status == getOrderStatusName(OrderStatus.onTheWay)
           ? AppColors.primary
-          : order.status == getOrderStatusName(OrderStatus.pending)
+          : order.status == getOrderStatusName(OrderStatus.notStartedYet)
           ? Colors.blueGrey
           : order.status == getOrderStatusName(OrderStatus.rejected)
           ? Colors.red

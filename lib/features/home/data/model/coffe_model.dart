@@ -51,4 +51,17 @@ class CoffeeModel {
       'type': type,
     };
   }
+
+  CoffeeModel copyWith({required int count}) => CoffeeModel(
+    coffeeId: coffeeId,
+    numOfReviews: numOfReviews,
+    name: name,
+    price: price,
+    size: size,
+    count: count,
+    img: img,
+    rate: rate,
+    desc: desc,
+    type: type,
+  );
 }

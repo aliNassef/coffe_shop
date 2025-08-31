@@ -39,6 +39,14 @@ final class AddorderFailed extends OrderState {
 
 final class AddorderSuccess extends OrderState {}
 
+final class ChangeOrderCount extends OrderState {
+  final int count;
+  const ChangeOrderCount({required this.count});
+
+  @override
+  List<Object> get props => [count];
+}
+
 final class GetOrderPositonLoading extends OrderState {}
 
 final class GetOrderPositonLoaded extends OrderState {

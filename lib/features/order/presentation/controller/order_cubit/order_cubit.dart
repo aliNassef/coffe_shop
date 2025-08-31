@@ -28,4 +28,8 @@ class OrderCubit extends Cubit<OrderState> {
       (success) => emit(GetUserOrdersSuccess(orders: success)),
     );
   }
+
+  void changeOrderCount(int count){
+    emit(ChangeOrderCount(count: count));
+  }
 }

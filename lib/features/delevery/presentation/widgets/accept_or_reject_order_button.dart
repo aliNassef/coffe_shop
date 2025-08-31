@@ -78,7 +78,7 @@ class _AcceptorRejectOrderButtonState extends State<AcceptorRejectOrderButton> {
                       deliveryPhone: '01128861472',
                       deliveryLat: state!.latitude,
                       deliveryLong: state.longitude,
-                      status: getOrderStatusName(OrderStatus.pending),
+                      status: getOrderStatusName(OrderStatus.notStartedYet),
                     );
                     context.read<DeliveryCubit>().actionOnOrder(
                       deleiveryModel: deliveryModel,

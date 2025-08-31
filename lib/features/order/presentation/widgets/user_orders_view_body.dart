@@ -64,7 +64,7 @@ class UserOrdersViewBody extends StatelessWidget {
             userPhone: "0101234567",
             userLat: 30.0444,
             userLong: 31.2357,
-            status: getOrderStatusName(OrderStatus.pending),
+            status: getOrderStatusName(OrderStatus.onTheWay),
             createdAt: DateTime.now(),
             deliveryId: "d123",
             deliveryName: "Ahmed",

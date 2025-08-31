@@ -1,12 +1,22 @@
+import 'package:coffe_shop/features/home/data/model/coffe_model.dart';
+import 'package:coffe_shop/features/order/presentation/controller/order_cubit/order_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_styles.dart';
 import '../../../../core/widgets/custom_network_image.dart';
 
-class OrderItem extends StatelessWidget {
-  const OrderItem({super.key});
+class OrderItem extends StatefulWidget {
+  const OrderItem({super.key, required this.coffe});
+  final CoffeeModel coffe;
+  @override
+  State<OrderItem> createState() => _OrderItemState();
+}
+
+class _OrderItemState extends State<OrderItem> {
+  int count = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +27,18 @@ class OrderItem extends StatelessWidget {
           height: 80.h,
           width: 120.w,
           radius: 12,
-          img:
-              'https://images.unsplash.com/photo-1506372023823-741c83b836fe?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          img: widget.coffe.img,
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              'Cafe Latte',
+              widget.coffe.name,
               style: AppStyles.medium16.copyWith(fontSize: 18.sp),
             ),
             Text(
-              'Deep Foam',
+              widget.coffe.type,
               style: AppStyles.regular14.copyWith(fontSize: 14.sp),
             ),
           ],
@@ -38,7 +47,14 @@ class OrderItem extends StatelessWidget {
         Row(
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                if (count > 1) {
+                  setState(() {
+                    count--;
+                  });
+                  context.read<OrderCubit>().changeOrderCount(count);
+                }
+              },
               icon: Container(
                 padding: EdgeInsets.all(8.w),
                 decoration: BoxDecoration(
@@ -48,9 +64,14 @@ class OrderItem extends StatelessWidget {
                 child: Icon(Icons.remove, size: 24.sp, color: AppColors.dark),
               ),
             ),
-            Text('1'),
+            Text(count.toString()),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  count++;
+                });
+                context.read<OrderCubit>().changeOrderCount(count);
+              },
               icon: Container(
                 decoration: BoxDecoration(
                   color: AppColors.gray,

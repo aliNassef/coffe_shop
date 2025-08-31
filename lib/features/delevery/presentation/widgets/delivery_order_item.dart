@@ -20,7 +20,7 @@ class DeliveryOrderItem extends StatelessWidget {
     var boxDecoration = BoxDecoration(
       color: order.status == getOrderStatusName(OrderStatus.onTheWay)
           ? AppColors.primary
-          : order.status == getOrderStatusName(OrderStatus.pending)
+          : order.status == getOrderStatusName(OrderStatus.notStartedYet)
           ? Colors.blueGrey
           : order.status == getOrderStatusName(OrderStatus.rejected)
           ? Colors.red
@@ -60,7 +60,7 @@ class DeliveryOrderItem extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: order.calcTotalPrice().toString(),
+                        text: '${order.calcTotalPrice()} \$',
                         style: AppStyles.bold24.copyWith(
                           color: AppColors.primary,
                         ),
@@ -140,8 +140,11 @@ class DeliveryOrderItem extends StatelessWidget {
               (coffe) => ListTile(
                 leading: CircleAvatar(backgroundImage: NetworkImage(coffe.img)),
                 title: Text(coffe.name),
-                subtitle: Text(coffe.price.toString()),
-                trailing: Text(coffe.count.toString()),
+                subtitle: Text('${coffe.price} \$'),
+                trailing: Text(
+                  'qty: ${coffe.count}',
+                  style: AppStyles.bold24.copyWith(color: AppColors.primary),
+                ),
               ),
             ),
             Gap(16),

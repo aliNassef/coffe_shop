@@ -26,6 +26,7 @@ class OrderViewBody extends StatefulWidget {
 }
 
 class _OrderViewBodyState extends State<OrderViewBody> {
+  int _orderCount = 0;
   @override
   void initState() {
     super.initState();
@@ -87,7 +88,7 @@ class _OrderViewBodyState extends State<OrderViewBody> {
         Gap(16),
         Divider(color: Colors.grey, indent: 30.w, endIndent: 30.w),
         Gap(16),
-        OrderItem(),
+        OrderItem(coffe: widget.coffe),
         Gap(16),
         Text('Payment Summary', style: AppStyles.bold24),
         Gap(16),
@@ -137,8 +138,14 @@ class _OrderViewBodyState extends State<OrderViewBody> {
     );
   }
 
-  BlocBuilder<OrderCubit, OrderState> _addOrderButton() {
-    return BlocBuilder<OrderCubit, OrderState>(
+  BlocConsumer<OrderCubit, OrderState> _addOrderButton() {
+    return BlocConsumer<OrderCubit, OrderState>(
+      listenWhen: (previous, current) => current is ChangeOrderCount,
+      listener: (context, state) {
+        if (state is ChangeOrderCount) {
+          _orderCount = state.count;
+        }
+      },
       buildWhen: (previous, current) =>
           current is AddorderLoading ||
           current is AddorderFailed ||
@@ -160,6 +167,7 @@ class _OrderViewBodyState extends State<OrderViewBody> {
               onPressed: userPosition == null
                   ? null
                   : () {
+                      var coffe = widget.coffe.copyWith(count: _orderCount);
                       var order = OrderModel(
                         orderId: '1',
                         userId: '1',
@@ -169,8 +177,7 @@ class _OrderViewBodyState extends State<OrderViewBody> {
                         userLong: userPosition.longitude,
                         status: getOrderStatusName(OrderStatus.onTheWay),
                         createdAt: DateTime.now(),
-
-                        coffees: [],
+                        coffees: [coffe],
                       );
                       context.read<OrderCubit>().addOrder(order);
                     },

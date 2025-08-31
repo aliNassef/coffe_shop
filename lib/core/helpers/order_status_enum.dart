@@ -1,4 +1,4 @@
-enum OrderStatus { pending, accepted, rejected, delivered, onTheWay }
+enum OrderStatus { notStartedYet, accepted, rejected, delivered, onTheWay }
 
 extension OrderStatusExtension on OrderStatus {
   String get name => toString().split('.').last;
@@ -6,8 +6,8 @@ extension OrderStatusExtension on OrderStatus {
 
 String getOrderStatusName(OrderStatus status) {
   switch (status) {
-    case OrderStatus.pending:
-      return 'Pending';
+    case OrderStatus.notStartedYet:
+      return 'Not Started Yet';
     case OrderStatus.accepted:
       return 'Accepted';
     case OrderStatus.rejected:
