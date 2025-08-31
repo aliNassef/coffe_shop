@@ -32,7 +32,8 @@ class _AcceptorRejectOrderButtonState extends State<AcceptorRejectOrderButton> {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: widget.order.status == getOrderStatusName(OrderStatus.onTheWay),
+      visible:
+          widget.order.status == getOrderStatusName(OrderStatus.notStartedYet),
       replacement: Container(),
       child: Row(
         spacing: 16.w,

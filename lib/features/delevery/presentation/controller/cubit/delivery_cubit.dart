@@ -48,6 +48,10 @@ class DeliveryCubit extends Cubit<DeliveryState> {
     );
   }
 
+  void changeOrderStatus(String orderId, String status) async {
+    await _delieveryRepo.changeOrderStatus(orderId, status);
+  }
+
   @override
   Future<void> close() {
     _streamSubscription?.cancel();

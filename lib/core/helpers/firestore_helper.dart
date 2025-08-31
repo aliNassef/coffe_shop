@@ -120,7 +120,24 @@ class FirestoreHelper {
     }
   }
 
-  Future<void> updateDeliveryLatLong(double lat, double long, String orderId) async {
+  Future<void> changeOrderStatus({
+    required String orderId,
+    required String status,
+  }) async {
+    try {
+      await _firestore.collection('orders').doc(orderId).update({
+        'status': status,
+      });
+    } catch (e) {
+      throw Exception('Error accepting order: $e');
+    }
+  }
+
+  Future<void> updateDeliveryLatLong(
+    double lat,
+    double long,
+    String orderId,
+  ) async {
     try {
       await _firestore.collection('orders').doc(orderId).update({
         'deliveryLat': lat,

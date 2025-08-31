@@ -1,4 +1,6 @@
 import 'package:coffe_shop/core/widgets/default_app_button.dart';
+import 'package:coffe_shop/features/delevery/presentation/controller/cubit/delivery_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/helpers/order_status_enum.dart';
 import '../../../order/data/models/order_model.dart';
@@ -153,6 +155,10 @@ class DeliveryOrderItem extends StatelessWidget {
             DefaultAppButton(
               text: 'Open Map',
               onPressed: () {
+                context.read<DeliveryCubit>().changeOrderStatus(
+                  order.orderId,
+                  getOrderStatusName(OrderStatus.onTheWay),
+                );
                 _openMap(context);
               },
             ),

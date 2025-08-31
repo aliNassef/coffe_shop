@@ -53,4 +53,20 @@ class DelieveryRepoImpl extends DelieveryRepo {
       return Left(Failure(errMessage: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> changeOrderStatus(
+    String orderId,
+    String status,
+  ) async {
+    try {
+      await _firestoreHelper.changeOrderStatus(
+        orderId: orderId,
+        status: status,
+      );
+      return Right(null);
+    } catch (e) {
+      return Left(Failure(errMessage: e.toString()));
+    }
+  }
 }
