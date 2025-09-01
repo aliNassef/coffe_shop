@@ -33,7 +33,10 @@ void setupServiceLocator() async {
 
 void _setupDeleveryFeature() {
   injector.registerLazySingleton<DelieveryRepo>(
-    () => DelieveryRepoImpl(firestoreHelper: injector<FirestoreHelper>()),
+    () => DelieveryRepoImpl(
+      firestoreHelper: injector<FirestoreHelper>(),
+      locationHelper: injector<LocationHelper>(),
+    ),
   );
   injector.registerFactory(() => DeliveryCubit(injector<DelieveryRepo>()));
 }

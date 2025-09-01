@@ -38,7 +38,7 @@ class _DeliveryMapViewState extends State<DeliveryMapView> {
       widget.order.deliveryLong!,
     );
     _getPolyLine();
-    _listenOrderPosition();
+    context.read<DeliveryCubit>().getDeliveryPosition();
   }
 
   @override
@@ -51,36 +51,68 @@ class _DeliveryMapViewState extends State<DeliveryMapView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: LatLng(orderPosition!.latitude, orderPosition!.longitude),
-              zoom: 15,
+      body: BlocListener<DeliveryCubit, DeliveryState>(
+        listener: (context, state) {
+          if (state is DeliveryGetPositionLoadedState) {
+            orderPosition = state.position;
+            _getPolyLine();
+            if (mounted) {
+              context.read<DeliveryCubit>().updateDeliveryLatLong(
+                lat: state.position.latitude,
+                long: state.position.longitude,
+                orderId: widget.order.orderId,
+              );
+              _getDiffDistance(context);
+            }
+          }
+        },
+        child: Stack(
+          children: [
+            GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: LatLng(
+                  orderPosition!.latitude,
+                  orderPosition!.longitude,
+                ),
+                zoom: 15,
+              ),
+              polylines: Set<Polyline>.of(polylines.values),
+              markers: getMarkers,
+              onMapCreated: (GoogleMapController controller) {
+                _mapController = controller;
+                setState(() {
+                  isMapReady = true;
+                });
+              },
             ),
-            polylines: Set<Polyline>.of(polylines.values),
-            markers: getMarkers,
-            onMapCreated: (GoogleMapController controller) {
-              _mapController = controller;
-              setState(() {
-                isMapReady = true;
-              });
-            },
-          ),
-          Positioned(
-            top: 50.h,
-            right: 16.w,
-            left: 16.w,
-            child: isMapReady
-                ? TrackOrderMapTopBar(
-                    mapController: _mapController,
-                    position: orderPosition!,
-                  )
-                : const SizedBox.shrink(),
-          ),
-        ],
+            Positioned(
+              top: 50.h,
+              right: 16.w,
+              left: 16.w,
+              child: isMapReady
+                  ? TrackOrderMapTopBar(
+                      mapController: _mapController,
+                      position: orderPosition!,
+                    )
+                  : const SizedBox.shrink(),
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  void _getDiffDistance(BuildContext context) {
+    double distance = context.read<DeliveryCubit>().getDiffDistance(
+      widget.order.userLat,
+      widget.order.userLong,
+      orderPosition!.latitude,
+      orderPosition!.longitude,
+    );
+    log(" distance: $distance");
+    if (distance < 100) {
+      log('order delivered');
+    }
   }
 
   Set<Marker> get getMarkers {
@@ -133,41 +165,5 @@ class _DeliveryMapViewState extends State<DeliveryMapView> {
       }
       _addPolyLine();
     }
-  }
-
-  void _listenOrderPosition() async {
-    _positionStreamSubscription =
-        Geolocator.getPositionStream(
-          locationSettings: const LocationSettings(
-            accuracy: LocationAccuracy.high,
-            distanceFilter: 10,
-          ),
-        ).listen((position) {
-          setState(() {
-            orderPosition = LatLng(position.latitude, position.longitude);
-          });
-          _getPolyLine();
-          if (mounted) {
-            context.read<DeliveryCubit>().updateDeliveryLatLong(
-              lat: position.latitude,
-              long: position.longitude,
-              orderId: widget.order.orderId,
-            );
-
-            if (_diffDistance() < 100) {
-              log('order delivered');
-            }
-          }
-        });
-  }
-
-  double _diffDistance() {
-    final distance = Geolocator.distanceBetween(
-      widget.order.userLat,
-      widget.order.userLong,
-      orderPosition!.latitude,
-      orderPosition!.longitude,
-    );
-    return distance;
   }
 }

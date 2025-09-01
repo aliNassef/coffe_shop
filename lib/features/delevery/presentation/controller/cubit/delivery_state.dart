@@ -34,3 +34,11 @@ final class DeliveryUpdateOrderState extends DeliveryState {
   @override
   List<Object> get props => [status];
 }
+
+final class DeliveryGetPositionLoadedState extends DeliveryState {
+  final LatLng position;
+
+  const DeliveryGetPositionLoadedState({required this.position});
+  @override
+  List<Object> get props => [position];
+}

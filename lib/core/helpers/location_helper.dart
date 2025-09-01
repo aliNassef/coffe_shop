@@ -64,4 +64,19 @@ class LocationHelper {
       throw Exception(e.toString());
     }
   }
+
+  Stream<Position> getPositionStream() async* {
+    await for (final position in Geolocator.getPositionStream(
+      locationSettings: const LocationSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 10,
+      ),
+    )) {
+      yield position;
+    }
+  }
+
+  double getDiffDistance(double lat1, double long1, double lat2, double long2) {
+    return Geolocator.distanceBetween(lat1, long1, lat2, long2);
+  }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../data/repo/delievery_repo.dart';
 import '../../../../order/data/models/order_model.dart';
 import 'package:equatable/equatable.dart';
@@ -12,6 +13,8 @@ part 'delivery_state.dart';
 class DeliveryCubit extends Cubit<DeliveryState> {
   DeliveryCubit(this._delieveryRepo) : super(DeliveryInitial());
   final DelieveryRepo _delieveryRepo;
+  StreamSubscription? _streamSubscriptionOrders;
+  StreamSubscription? _streamSubscriptionPosition;
 
   void actionOnOrder({
     required DeleiveryModel deleiveryModel,
@@ -23,15 +26,31 @@ class DeliveryCubit extends Cubit<DeliveryState> {
     );
   }
 
-  StreamSubscription? _streamSubscription;
-  void getDeliveryOrrders() async {
+  void getDeliveryOrrders() {
     emit(DeliveryLoading());
-    _streamSubscription = _delieveryRepo.getDeliveryOrders().listen((
+    _streamSubscriptionOrders?.cancel();
+    _streamSubscriptionOrders = _delieveryRepo.getDeliveryOrders().listen((
       ordersOrFailure,
     ) {
       ordersOrFailure.fold(
         (failure) => emit(DeliveryFailure(errMessage: failure.errMessage)),
         (orders) => emit(DeliveryLoaded(orders: orders)),
+      );
+    });
+  }
+
+  void getDeliveryPosition() {
+    _streamSubscriptionPosition?.cancel();
+    _streamSubscriptionPosition = _delieveryRepo.getDeliveryPosition().listen((
+      positionOrFailure,
+    ) {
+      positionOrFailure.fold(
+        (failure) => emit(DeliveryFailure(errMessage: failure.errMessage)),
+        (position) => emit(
+          DeliveryGetPositionLoadedState(
+            position: LatLng(position.latitude, position.longitude),
+          ),
+        ),
       );
     });
   }
@@ -52,9 +71,19 @@ class DeliveryCubit extends Cubit<DeliveryState> {
     await _delieveryRepo.changeOrderStatus(orderId, status);
   }
 
+  double getDiffDistance(double lat1, double long1, double lat2, double long2) {
+    return _delieveryRepo.getDiffDistance(
+      lat1: lat1,
+      long1: long1,
+      lat2: lat2,
+      long2: long2,
+    );
+  }
+
   @override
   Future<void> close() {
-    _streamSubscription?.cancel();
+    _streamSubscriptionOrders?.cancel();
+    _streamSubscriptionPosition?.cancel();
     return super.close();
   }
 }

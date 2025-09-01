@@ -1,3 +1,6 @@
+import 'package:coffe_shop/core/helpers/location_helper.dart';
+import 'package:geolocator/geolocator.dart';
+
 import '../../../../core/helpers/failure.dart';
 import '../model/deleivery_model.dart';
 
@@ -10,8 +13,12 @@ import 'delievery_repo.dart';
 
 class DelieveryRepoImpl extends DelieveryRepo {
   final FirestoreHelper _firestoreHelper;
-  DelieveryRepoImpl({required FirestoreHelper firestoreHelper})
-    : _firestoreHelper = firestoreHelper;
+  final LocationHelper _locationHelper;
+  DelieveryRepoImpl({
+    required FirestoreHelper firestoreHelper,
+    required LocationHelper locationHelper,
+  }) : _firestoreHelper = firestoreHelper,
+       _locationHelper = locationHelper;
 
   @override
   Future<Either<Failure, void>> actionOnOrder({
@@ -68,5 +75,26 @@ class DelieveryRepoImpl extends DelieveryRepo {
     } catch (e) {
       return Left(Failure(errMessage: e.toString()));
     }
+  }
+
+  @override
+  Stream<Either<Failure, Position>> getDeliveryPosition() async* {
+    try {
+      await for (final position in _locationHelper.getPositionStream()) {
+        yield Right(position);
+      }
+    } catch (e) {
+      yield Left(Failure(errMessage: e.toString()));
+    }
+  }
+  @override
+   double getDiffDistance ({
+    required double lat1,
+    required double long1,
+    required double lat2,
+    required double long2
+  }) {
+
+    return _locationHelper.getDiffDistance(lat1, long1, lat2, long2);
   }
 }
