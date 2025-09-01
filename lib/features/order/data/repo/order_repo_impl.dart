@@ -1,6 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/helpers/firestore_helper.dart';
+import '../../../../core/helpers/location_helper.dart';
 import '../models/order_model.dart';
 
 import '../../../../core/helpers/failure.dart';
@@ -12,8 +13,10 @@ import 'order_repo.dart';
 class OrderRepoImpl extends OrderRepo {
   final FirestoreHelper _firestoreHelper;
 
-  OrderRepoImpl({required FirestoreHelper firestoreHelper})
-    : _firestoreHelper = firestoreHelper;
+  final LocationHelper _locationHelper;
+
+  OrderRepoImpl({required FirestoreHelper firestoreHelper, required LocationHelper locationHelper})
+    : _firestoreHelper = firestoreHelper , _locationHelper = locationHelper;
 
   @override
   Future<Either<Failure, void>> addOrder(OrderModel order) async {
@@ -42,6 +45,22 @@ class OrderRepoImpl extends OrderRepo {
     try {
       final order = await _firestoreHelper.getOrderById(orderId);
       return Right(LatLng(order!.deliveryLat!, order.deliveryLong!));
+    } catch (e) {
+      return Left(Failure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Set<Polyline>>> drawPolylineCoordinates({
+    required LatLng start,
+    required LatLng end,
+  }) async {
+    try {
+      final polylines = await _locationHelper.getPolylineCoordinates(
+        start: start,
+        end: end,
+      );
+      return Right(polylines);
     } catch (e) {
       return Left(Failure(errMessage: e.toString()));
     }

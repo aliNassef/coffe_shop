@@ -12,5 +12,12 @@ final class GetOrderPosition extends GetOrderPositionEvent {
   const GetOrderPosition({required this.orderId});
   @override
   List<Object> get props => [orderId];
+}
 
+final class DrawPolylineEvent extends GetOrderPositionEvent {
+  final LatLng source;
+  final LatLng destination;
+  const DrawPolylineEvent({required this.source, required this.destination});
+  @override
+  List<Object> get props => [source, destination];
 }

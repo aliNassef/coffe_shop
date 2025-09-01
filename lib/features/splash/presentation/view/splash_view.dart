@@ -1,4 +1,4 @@
-import 'package:coffe_shop/features/delevery/presentation/view/delievery_view.dart';
+import 'package:coffe_shop/features/layout/presentation/views/layout_view.dart';
 import '../../../../core/extensions/mediaquery_size.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/utils/app_assets.dart';
@@ -54,6 +54,6 @@ class SplashView extends StatelessWidget {
   }
 
   void _goToHomeScreen(BuildContext context) {
-    Navigator.pushNamed(context, DelieveryView.routeName);
+    Navigator.pushNamed(context, LayoutView.routeName);
   }
 }

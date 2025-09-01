@@ -25,3 +25,10 @@ final class GetOrderPositionFailure extends GetOrderPositionState {
   @override
   List<Object> get props => [errMessage];
 }
+
+final class DrawPolylineState extends GetOrderPositionState {
+  final Set<Polyline> polylines;
+  const DrawPolylineState({required this.polylines});
+  @override
+  List<Object> get props => [polylines];
+}

@@ -43,7 +43,10 @@ void _setupDeleveryFeature() {
 
 void _setupOrderFeature() {
   injector.registerLazySingleton<OrderRepo>(
-    () => OrderRepoImpl(firestoreHelper: injector<FirestoreHelper>()),
+    () => OrderRepoImpl(
+      firestoreHelper: injector<FirestoreHelper>(),
+      locationHelper: injector<LocationHelper>(),
+    ),
   );
   injector.registerFactory(() => OrderCubit(injector<OrderRepo>()));
   injector.registerFactory(() => GetOrderPositionBloc(injector<OrderRepo>()));

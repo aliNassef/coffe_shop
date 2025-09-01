@@ -22,5 +22,16 @@ class GetOrderPositionBloc
         (position) => emit(GetOrderPositionLoaded(position: position)),
       );
     });
+    on<DrawPolylineEvent>((event, emit) async {
+      final polylinesOrFailure = await _orderRepo.drawPolylineCoordinates(
+        start: event.source,
+        end: event.destination,
+      );
+      polylinesOrFailure.fold(
+        (failure) =>
+            emit(GetOrderPositionFailure(errMessage: failure.errMessage)),
+        (polylines) => emit(DrawPolylineState(polylines: polylines)),
+      );
+    });
   }
 }
