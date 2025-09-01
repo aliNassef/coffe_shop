@@ -7,6 +7,7 @@ import 'dart:async' as _i4;
 
 import 'package:coffe_shop/core/helpers/location_helper.dart' as _i3;
 import 'package:geolocator/geolocator.dart' as _i2;
+import 'package:google_maps_flutter/google_maps_flutter.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i5;
 
@@ -59,4 +60,55 @@ class MockLocationHelper extends _i1.Mock implements _i3.LocationHelper {
             ),
           )
           as _i4.Future<String>);
+
+  @override
+  _i4.Stream<_i2.Position> getPositionStream() =>
+      (super.noSuchMethod(
+            Invocation.method(#getPositionStream, []),
+            returnValue: _i4.Stream<_i2.Position>.empty(),
+          )
+          as _i4.Stream<_i2.Position>);
+
+  @override
+  double getDiffDistance(
+    double? lat1,
+    double? long1,
+    double? lat2,
+    double? long2,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#getDiffDistance, [lat1, long1, lat2, long2]),
+            returnValue: 0.0,
+          )
+          as double);
+
+  @override
+  _i4.Future<Set<_i6.Polyline>> getPolylineCoordinates({
+    required _i6.LatLng? start,
+    required _i6.LatLng? end,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#getPolylineCoordinates, [], {
+              #start: start,
+              #end: end,
+            }),
+            returnValue: _i4.Future<Set<_i6.Polyline>>.value(<_i6.Polyline>{}),
+          )
+          as _i4.Future<Set<_i6.Polyline>>);
+
+  @override
+  Set<_i6.Polyline> buildPolylineSet(
+    List<_i6.LatLng>? polylineCoordinates, {
+    String? polylineId = 'route',
+    int? width = 5,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(
+              #buildPolylineSet,
+              [polylineCoordinates],
+              {#polylineId: polylineId, #width: width},
+            ),
+            returnValue: <_i6.Polyline>{},
+          )
+          as Set<_i6.Polyline>);
 }
