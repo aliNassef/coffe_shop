@@ -1,5 +1,5 @@
-import 'package:coffe_shop/core/widgets/default_app_button.dart';
-import 'package:coffe_shop/features/order/presentation/views/track_order_map_view.dart';
+import '../../../../core/widgets/default_app_button.dart';
+import '../views/track_order_map_view.dart';
 
 import '../../data/models/order_model.dart';
 import 'package:flutter/material.dart';

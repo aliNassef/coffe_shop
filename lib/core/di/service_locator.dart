@@ -1,4 +1,4 @@
-import 'package:coffe_shop/core/controller/cubit/internet_connection_cubit.dart';
+import '../controller/cubit/internet_connection_cubit.dart';
 
 import '../../features/order/presentation/controller/bloc/get_order_position_bloc.dart';
 import '../repo/user_repo.dart';

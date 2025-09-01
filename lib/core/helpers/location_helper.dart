@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:coffe_shop/core/utils/app_colors.dart';
-import 'package:coffe_shop/env/env.dart';
+import '../utils/app_colors.dart';
+import '../../env/env.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';

@@ -1,4 +1,4 @@
-import 'package:coffe_shop/core/widgets/custom_no_internet_widget.dart';
+import 'core/widgets/custom_no_internet_widget.dart';
 
 import 'core/controller/cubit/internet_connection_cubit.dart';
 import 'core/di/service_locator.dart';

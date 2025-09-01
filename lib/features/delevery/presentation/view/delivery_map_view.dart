@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:coffe_shop/features/order/data/models/order_model.dart';
+import '../../../order/data/models/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

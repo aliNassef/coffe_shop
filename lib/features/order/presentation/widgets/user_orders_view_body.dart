@@ -1,4 +1,4 @@
-import 'package:coffe_shop/core/utils/app_colors.dart';
+import '../../../../core/utils/app_colors.dart';
 
 import '../../../../core/widgets/custom_failure_widget.dart';
 import '../controller/order_cubit/order_cubit.dart';

@@ -1,5 +1,5 @@
-import 'package:coffe_shop/features/home/data/model/coffe_model.dart';
-import 'package:coffe_shop/features/order/presentation/controller/order_cubit/order_cubit.dart';
+import '../../../home/data/model/coffe_model.dart';
+import '../controller/order_cubit/order_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

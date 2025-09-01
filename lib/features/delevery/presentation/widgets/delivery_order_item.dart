@@ -1,5 +1,5 @@
-import 'package:coffe_shop/core/widgets/default_app_button.dart';
-import 'package:coffe_shop/features/delevery/presentation/controller/cubit/delivery_cubit.dart';
+import '../../../../core/widgets/default_app_button.dart';
+import '../controller/cubit/delivery_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/helpers/order_status_enum.dart';
