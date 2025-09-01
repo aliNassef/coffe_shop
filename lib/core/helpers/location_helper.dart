@@ -1,9 +1,15 @@
 import 'dart:developer';
 
+import 'package:coffe_shop/core/utils/app_colors.dart';
+import 'package:coffe_shop/env/env.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationHelper {
+  final PolylinePoints _polylinePoints = PolylinePoints(apiKey: Env.mapsApiKey);
+
   Future<Position> getUserCoardinates() async =>
       await Geolocator.getCurrentPosition(
         locationSettings: const LocationSettings(
@@ -78,5 +84,43 @@ class LocationHelper {
 
   double getDiffDistance(double lat1, double long1, double lat2, double long2) {
     return Geolocator.distanceBetween(lat1, long1, lat2, long2);
+  }
+
+  Future<Set<Polyline>> getPolylineCoordinates({
+    required LatLng? start,
+    required LatLng? end,
+  }) async {
+    final List<LatLng> polylineCoordinates = [];
+
+    final result = await _polylinePoints.getRouteBetweenCoordinatesV2(
+      request: RoutesApiRequest(
+        origin: PointLatLng(start!.latitude, start.longitude),
+        destination: PointLatLng(end!.latitude, end.longitude),
+        travelMode: TravelMode.driving,
+      ),
+    );
+
+    if (result.routes.isNotEmpty) {
+      for (var point in result.routes[0].polylinePoints ?? []) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      }
+    }
+    return buildPolylineSet(polylineCoordinates);
+  }
+
+  Set<Polyline> buildPolylineSet(
+    List<LatLng> polylineCoordinates, {
+    String polylineId = "route",
+
+    int width = 5,
+  }) {
+    return {
+      Polyline(
+        polylineId: PolylineId(polylineId),
+        color: AppColors.primary,
+        width: width,
+        points: polylineCoordinates,
+      ),
+    };
   }
 }

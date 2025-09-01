@@ -80,6 +80,17 @@ class DeliveryCubit extends Cubit<DeliveryState> {
     );
   }
 
+  void drawPolyLine({required LatLng start, required LatLng end}) async {
+    final polylinesOrFailure = await _delieveryRepo.drawPolylineCoordinates(
+      start: start,
+      end: end,
+    );
+    polylinesOrFailure.fold(
+      (failure) => emit(DeliveryFailure(errMessage: failure.errMessage)),
+      (polylines) => emit(DrawPolyLineState(polylines: polylines)),
+    );
+  }
+
   @override
   Future<void> close() {
     _streamSubscriptionOrders?.cancel();

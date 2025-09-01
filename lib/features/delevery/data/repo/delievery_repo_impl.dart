@@ -1,5 +1,6 @@
 import 'package:coffe_shop/core/helpers/location_helper.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/helpers/failure.dart';
 import '../model/deleivery_model.dart';
@@ -87,14 +88,30 @@ class DelieveryRepoImpl extends DelieveryRepo {
       yield Left(Failure(errMessage: e.toString()));
     }
   }
+
   @override
-   double getDiffDistance ({
+  double getDiffDistance({
     required double lat1,
     required double long1,
     required double lat2,
-    required double long2
+    required double long2,
   }) {
-
     return _locationHelper.getDiffDistance(lat1, long1, lat2, long2);
+  }
+
+  @override
+  Future<Either<Failure, Set<Polyline>>> drawPolylineCoordinates({
+    required LatLng start,
+    required LatLng end,
+  }) async {
+    try {
+      final polylines = await _locationHelper.getPolylineCoordinates(
+        start: start,
+        end: end,
+      );
+      return Right(polylines);
+    } catch (e) {
+      return Left(Failure(errMessage: e.toString()));
+    }
   }
 }

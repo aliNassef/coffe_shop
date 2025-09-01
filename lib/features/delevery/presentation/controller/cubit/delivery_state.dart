@@ -42,3 +42,11 @@ final class DeliveryGetPositionLoadedState extends DeliveryState {
   @override
   List<Object> get props => [position];
 }
+
+final class DrawPolyLineState extends DeliveryState {
+  final Set<Polyline> polylines;
+
+  const DrawPolyLineState({required this.polylines});
+  @override
+  List<Object> get props => [polylines];
+}
