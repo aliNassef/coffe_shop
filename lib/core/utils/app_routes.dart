@@ -1,3 +1,5 @@
+import '../../features/auth/presentation/views/login_view.dart';
+import '../../features/auth/presentation/views/signup_view.dart';
 import '../di/service_locator.dart';
 import '../../features/delevery/presentation/controller/cubit/delivery_cubit.dart';
 import '../../features/order/data/models/order_model.dart';
@@ -73,6 +75,18 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case CustomNoInternetWidget.routeName:
       return PageRouteBuilder(
         pageBuilder: (_, _, _) => const CustomNoInternetWidget(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(opacity: animation, child: child),
+      );
+    case LoginView.routeName:
+      return PageRouteBuilder(
+        pageBuilder: (_, _, _) => const LoginView(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(opacity: animation, child: child),
+      );
+    case SignupView.routeName:
+      return PageRouteBuilder(
+        pageBuilder: (_, _, _) => const SignupView(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             FadeTransition(opacity: animation, child: child),
       );

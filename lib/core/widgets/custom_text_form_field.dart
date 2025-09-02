@@ -35,11 +35,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: AppStyles.regular16.copyWith(
-        color: widget.inputColor ?? Colors.white,
+      style: AppStyles.regular22.copyWith(
+        color: widget.inputColor ?? AppColors.dark,
       ),
       keyboardType: widget.keyboardType,
-      cursorColor: AppColors.gray,
+      cursorColor: AppColors.primary,
       obscureText: widget.isPassword ? isSecure : !isSecure,
       obscuringCharacter: '●',
       validator: (value) {
@@ -47,6 +47,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           return 'Field is required';
         }
         return null;
+      },
+      onTapOutside: (event) {
+        FocusScope.of(context).unfocus();
       },
       maxLines: widget.maxLines,
       controller: widget.controller,
@@ -56,11 +59,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         hintText: widget.hintText,
         hintStyle: AppStyles.regular16.copyWith(
-          color: widget.hintColor ?? AppColors.gray.withValues(alpha: 0.6),
+          color: widget.hintColor ?? AppColors.dark,
         ),
-        border: buildBorderStyle(AppColors.gray),
-        enabledBorder: buildBorderStyle(AppColors.gray),
-        focusedBorder: buildBorderStyle(AppColors.gray),
+        border: buildBorderStyle(AppColors.secondary),
+        enabledBorder: buildBorderStyle(AppColors.secondary),
+        focusedBorder: buildBorderStyle(AppColors.secondary),
         suffixIcon: widget.isPassword
             ? IconButton(
                 onPressed: () {
@@ -69,8 +72,14 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   });
                 },
                 icon: isSecure
-                    ? const Icon(Icons.visibility_off, color: AppColors.gray)
-                    : const Icon(Icons.visibility_sharp, color: AppColors.gray),
+                    ? const Icon(
+                        Icons.visibility_off,
+                        color: AppColors.secondary,
+                      )
+                    : const Icon(
+                        Icons.visibility_sharp,
+                        color: AppColors.secondary,
+                      ),
               )
             : const SizedBox(),
       ),

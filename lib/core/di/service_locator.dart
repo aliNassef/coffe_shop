@@ -1,5 +1,8 @@
 import 'package:get_it/get_it.dart';
 
+import '../../features/auth/data/repo/auth_repo.dart';
+import '../../features/auth/data/repo/auth_repo_impl.dart';
+import '../../features/auth/presentation/controller/auth_cubit/auth_cubit.dart';
 import '../../features/delevery/data/repo/delievery_repo.dart';
 import '../../features/delevery/data/repo/delievery_repo_impl.dart';
 import '../../features/delevery/presentation/controller/cubit/delivery_cubit.dart';
@@ -27,6 +30,14 @@ void setupServiceLocator() async {
   _setupUserFeature();
   _setupOrderFeature();
   _setupDeleveryFeature();
+  _setupAuthFeature();
+}
+
+void _setupAuthFeature() {
+  injector.registerLazySingleton<AuthRepo>(
+    () => AuthRepoImpl(firebaseAuth: injector()),
+  );
+  injector.registerFactory(() => AuthCubit(injector<AuthRepo>()));
 }
 
 void _setupDeleveryFeature() {

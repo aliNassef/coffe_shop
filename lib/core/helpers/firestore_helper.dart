@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffe_shop/features/auth/data/models/user_model.dart';
 import '../../features/delevery/data/model/deleivery_model.dart';
 import '../../features/home/data/model/coffe_model.dart';
 
@@ -146,5 +147,22 @@ class FirestoreHelper {
     } catch (e) {
       throw Exception('Error updating delivery location: $e');
     }
+  }
+
+  Future<void> addUser(UserModel user) async {
+    try {
+      await _firestore.collection('users').doc(user.id).set(user.toMap());
+    } catch (e) {
+      throw Exception('Error adding user: $e');
+    }
+  }
+
+  Future<UserModel?> getUserById(String userId) async {
+    final doc = await _firestore.collection('users').doc(userId).get();
+
+    if (doc.exists) {
+      return UserModel.fromJson(doc.data()!);
+    }
+    return null;
   }
 }
