@@ -60,3 +60,24 @@ final class UpdateUserAddressState extends UserState {
   @override
   List<Object?> get props => [address];
 }
+
+final class GetUserLoading extends UserState {
+  @override
+  List<Object?> get props => [];
+}
+
+final class GetUserLoaded extends UserState {
+  final UserModel? user;
+
+  GetUserLoaded({this.user});
+  @override
+  List<Object?> get props => [user];
+}
+
+final class GetUserFailed extends UserState {
+  final String error;
+
+  GetUserFailed({required this.error});
+  @override
+  List<Object?> get props => [error];
+}

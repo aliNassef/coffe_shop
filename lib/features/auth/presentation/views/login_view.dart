@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/di/service_locator.dart';
+import '../controller/auth_cubit/auth_cubit.dart';
 import '../widgets/login_view_body.dart';
 
 class LoginView extends StatelessWidget {
@@ -8,7 +11,10 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(child: SafeArea(child: LoginViewBody())),
+      body: BlocProvider(
+        create: (context) => injector<AuthCubit>(),
+        child: SingleChildScrollView(child: SafeArea(child: LoginViewBody())),
+      ),
     );
   }
 }

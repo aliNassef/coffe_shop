@@ -1,3 +1,4 @@
+import 'package:coffe_shop/core/helpers/fireauth_helper.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../features/auth/data/repo/auth_repo.dart';
@@ -35,7 +36,7 @@ void setupServiceLocator() async {
 
 void _setupAuthFeature() {
   injector.registerLazySingleton<AuthRepo>(
-    () => AuthRepoImpl(firebaseAuth: injector()),
+    () => AuthRepoImpl(firebaseAuth: injector<FireauthHelper>()),
   );
   injector.registerFactory(() => AuthCubit(injector<AuthRepo>()));
 }
@@ -63,7 +64,11 @@ void _setupOrderFeature() {
 
 void _setupUserFeature() {
   injector.registerLazySingleton<UserRepo>(
-    () => UserRepoImpl(locationHelper: injector<LocationHelper>()),
+    () => UserRepoImpl(
+      locationHelper: injector<LocationHelper>(),
+      fireauthHelper: injector<FireauthHelper>(),
+      firestoreHelper: injector<FirestoreHelper>(),
+    ),
   );
   injector.registerLazySingleton<UserCubit>(
     () => UserCubit(injector<UserRepo>()),
@@ -73,6 +78,7 @@ void _setupUserFeature() {
 void _setupExternal() {
   injector.registerLazySingleton<FirestoreHelper>(() => FirestoreHelper());
   injector.registerLazySingleton<LocationHelper>(() => LocationHelper());
+  injector.registerLazySingleton<FireauthHelper>(() => FireauthHelper());
   injector.registerFactory<InternetConnectionCubit>(
     () => InternetConnectionCubit(),
   );

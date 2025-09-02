@@ -1,4 +1,6 @@
 import 'package:coffe_shop/core/helpers/failure.dart';
+import 'package:coffe_shop/core/helpers/fireauth_helper.dart';
+import 'package:coffe_shop/core/helpers/firestore_helper.dart';
 import 'package:coffe_shop/core/helpers/location_helper.dart';
 import 'package:coffe_shop/core/repo/user_repo.dart';
 import 'package:coffe_shop/core/repo/user_repo_impl.dart';
@@ -17,7 +19,11 @@ void main() {
 
   setUp(() {
     locationHelper = MockLocationHelper();
-    userRepo = UserRepoImpl(locationHelper: locationHelper);
+    userRepo = UserRepoImpl(
+      locationHelper: locationHelper,
+      fireauthHelper: FireauthHelper(),
+      firestoreHelper: FirestoreHelper(),
+    );
   });
 
   group('getUserAddress', () {

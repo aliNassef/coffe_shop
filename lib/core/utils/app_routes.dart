@@ -68,7 +68,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       );
     case LayoutView.routeName:
       return PageRouteBuilder(
-        pageBuilder: (_, _, _) => const LayoutView(),
+        pageBuilder: (_, _, _) => LayoutView(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             FadeTransition(opacity: animation, child: child),
       );

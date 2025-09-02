@@ -2,17 +2,39 @@ import 'package:coffe_shop/core/extensions/padding_extension.dart';
 import 'package:coffe_shop/core/utils/app_assets.dart';
 import 'package:coffe_shop/core/widgets/custom_text_form_field.dart';
 import 'package:coffe_shop/core/widgets/default_app_button.dart';
+import 'package:coffe_shop/core/widgets/show_loading_box.dart';
+import 'package:coffe_shop/features/delevery/presentation/view/delievery_view.dart';
+import 'package:coffe_shop/features/layout/presentation/views/layout_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'custom_drop_down_menu.dart';
+import '../../../../core/widgets/show_error_message.dart';
+import '../../data/models/user_model.dart';
+import '../controller/auth_cubit/auth_cubit.dart';
 
-class LoginViewBody extends StatelessWidget {
+class LoginViewBody extends StatefulWidget {
   const LoginViewBody({super.key});
+
+  @override
+  State<LoginViewBody> createState() => _LoginViewBodyState();
+}
+
+class _LoginViewBodyState extends State<LoginViewBody> {
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -24,19 +46,48 @@ class LoginViewBody extends StatelessWidget {
             ),
           ),
           const Gap(50),
-          CustomTextFormField(
-            hintText: 'Email',
-            controller: TextEditingController(),
-          ),
+          CustomTextFormField(hintText: 'Email', controller: _emailController),
           const Gap(20),
           CustomTextFormField(
             hintText: 'Password',
-            controller: TextEditingController(),
+            controller: _passwordController,
           ),
           const Gap(20),
-          CustomDropDownMenu(),
-          const Gap(32),
-          DefaultAppButton(text: 'Login', onPressed: () {}),
+          BlocListener<AuthCubit, AuthState>(
+            listener: (context, state) {
+              if (state is AuthError) {
+                Navigator.pop(context);
+                showErrorMessage(context, errMessage: state.message);
+              }
+              if (state is AuthSuccess) {
+                Navigator.pop(context);
+                if (state.role == UserRole.delivery) {
+                  Navigator.pushReplacementNamed(
+                    context,
+                    DelieveryView.routeName,
+                  );
+                }
+                if (state.role == UserRole.user) {
+                  Navigator.pushReplacementNamed(context, LayoutView.routeName);
+                }
+              }
+
+              if (state is AuthLoading) {
+                showLoadingBox(context);
+              }
+            },
+            child: DefaultAppButton(
+              text: 'Login',
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  context.read<AuthCubit>().login(
+                    _emailController.text.trim(),
+                    _passwordController.text.trim(),
+                  );
+                }
+              },
+            ),
+          ),
         ],
       ).withHorizontalPadding(16),
     );

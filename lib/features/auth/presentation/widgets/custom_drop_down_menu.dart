@@ -1,25 +1,19 @@
-import 'dart:developer';
-
 import 'package:coffe_shop/core/extensions/mediaquery_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_styles.dart';
 import '../../data/models/user_model.dart';
 
 class CustomDropDownMenu extends StatelessWidget {
-  const CustomDropDownMenu({super.key});
-
+  const CustomDropDownMenu({super.key, required this.controller});
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return DropdownMenu(
-      onSelected: (value) {
-        log(value.toString());
-      },
+      controller: controller,
       width: context.width,
       hintText: 'Role',
-      textStyle: AppStyles.regular22,
       inputDecorationTheme: InputDecorationTheme(
         contentPadding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 16.w),
         enabledBorder: OutlineInputBorder(

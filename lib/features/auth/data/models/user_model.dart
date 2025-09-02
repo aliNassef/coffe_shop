@@ -1,5 +1,5 @@
 class UserModel {
-  final String id;
+  final String? id;
   final String name;
   final String email;
   final String phoneNumber;
@@ -10,7 +10,7 @@ class UserModel {
     required this.name,
     required this.phoneNumber,
     required this.role,
-    required this.id,
+    this.id,
   });
 
   Map<String, dynamic> toMap() {

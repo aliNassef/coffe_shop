@@ -43,4 +43,6 @@ class FireauthHelper {
       throw Exception('Error logging in: $e');
     }
   }
+
+  String? getCurrentUserId() => _instance.currentUser?.uid;
 }
