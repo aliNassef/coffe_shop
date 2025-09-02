@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import '../../../../../core/repo/user_repo.dart';
 import 'package:geolocator/geolocator.dart';
  import 'package:meta/meta.dart';

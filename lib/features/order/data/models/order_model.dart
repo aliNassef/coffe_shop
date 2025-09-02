@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 
 import '../../../home/data/model/coffe_model.dart';
 
-class OrderModel {
+class OrderModel extends Equatable {
   final String orderId;
   final String userId;
   final String userName;
@@ -18,7 +19,7 @@ class OrderModel {
   final double? deliveryLong;
   final List<CoffeeModel> coffees;
 
-  OrderModel({
+  const OrderModel({
     required this.orderId,
     required this.userId,
     required this.userName,
@@ -27,11 +28,11 @@ class OrderModel {
     required this.userLong,
     required this.status,
     required this.createdAt,
-      this.deliveryId,
-      this.deliveryName,
-      this.deliveryPhone,
-      this.deliveryLat,
-      this.deliveryLong,
+    this.deliveryId,
+    this.deliveryName,
+    this.deliveryPhone,
+    this.deliveryLat,
+    this.deliveryLong,
     required this.coffees,
   });
 
@@ -81,4 +82,7 @@ class OrderModel {
     }
     return totalPrice;
   }
+
+  @override
+  List<Object?> get props => [orderId, userId];
 }

@@ -29,7 +29,7 @@ class OrderCubit extends Cubit<OrderState> {
     );
   }
 
-  void changeOrderCount(int count){
+  void changeOrderCount(int count) {
     emit(ChangeOrderCount(count: count));
   }
 }
