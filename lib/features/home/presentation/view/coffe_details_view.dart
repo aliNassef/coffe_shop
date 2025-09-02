@@ -1,5 +1,9 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
+
 import '../../../../core/extensions/mediaquery_size.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/utils/app_colors.dart';
@@ -7,10 +11,6 @@ import '../../../../core/utils/app_styles.dart';
 import '../../../../core/widgets/custom_network_image.dart';
 import '../../../../core/widgets/read_more_text.dart';
 import '../../data/model/coffe_model.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-
 import '../widgets/coffe_boxes_size.dart';
 import '../widgets/coffe_details_review.dart';
 import '../widgets/total_price_and_buy_now_button.dart';

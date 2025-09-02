@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../../data/repo/home_repo.dart';
 import 'package:meta/meta.dart';
 
 import '../../../data/model/coffe_model.dart';
+import '../../../data/repo/home_repo.dart';
 
 part 'coffe_state.dart';
 
