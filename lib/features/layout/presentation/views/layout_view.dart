@@ -1,4 +1,3 @@
-import 'package:coffe_shop/features/auth/data/models/user_model.dart';
 import '../../../home/presentation/view/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,9 +6,9 @@ import '../../../../core/utils/app_colors.dart';
 import '../../../order/presentation/views/user_order_view.dart';
 
 class LayoutView extends StatefulWidget {
-  const LayoutView({super.key, });
+  const LayoutView({super.key});
   static const routeName = 'layout';
-   
+
   @override
   State<LayoutView> createState() => _LayoutViewState();
 }

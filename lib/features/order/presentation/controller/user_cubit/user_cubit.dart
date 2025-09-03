@@ -47,4 +47,8 @@ class UserCubit extends Cubit<UserState> {
       (user) => emit(GetUserLoaded(user: user)),
     );
   }
+
+  (String, String) getuserNameAndPhone() {
+    return (__userRepo.getuserNameAndPhone());
+  }
 }

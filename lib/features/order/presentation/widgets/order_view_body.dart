@@ -168,11 +168,14 @@ class _OrderViewBodyState extends State<OrderViewBody> {
                   ? null
                   : () {
                       var coffe = widget.coffe.copyWith(count: _orderCount);
+                      (String, String) userNameAndPhone = context
+                          .read<UserCubit>()
+                          .getuserNameAndPhone();
                       var order = OrderModel(
                         orderId: '1',
                         userId: context.read<UserCubit>().getUserId(),
-                        userName: 'Ali Nassef',
-                        userPhone: '01552630695',
+                        userName: userNameAndPhone.$1,
+                        userPhone: userNameAndPhone.$2,
                         userLat: userPosition.latitude,
                         userLong: userPosition.longitude,
                         status: getOrderStatusName(OrderStatus.onTheWay),

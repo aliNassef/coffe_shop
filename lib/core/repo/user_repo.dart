@@ -9,4 +9,5 @@ abstract class UserRepo {
   Future<Either<Failure, Position>> getUserCoardinates();
   String getuserId();
   Future<Either<Failure, UserModel>> getUser(String id);
+  (String, String) getuserNameAndPhone();
 }

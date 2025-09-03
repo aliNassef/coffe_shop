@@ -1,3 +1,4 @@
+import 'package:coffe_shop/core/helpers/cache_helper.dart';
 import 'package:coffe_shop/core/helpers/fireauth_helper.dart';
 import 'package:get_it/get_it.dart';
 
@@ -68,6 +69,7 @@ void _setupUserFeature() {
       locationHelper: injector<LocationHelper>(),
       fireauthHelper: injector<FireauthHelper>(),
       firestoreHelper: injector<FirestoreHelper>(),
+      cacheHelper: injector<CacheHelper>(),
     ),
   );
   injector.registerLazySingleton<UserCubit>(
@@ -79,6 +81,7 @@ void _setupExternal() {
   injector.registerLazySingleton<FirestoreHelper>(() => FirestoreHelper());
   injector.registerLazySingleton<LocationHelper>(() => LocationHelper());
   injector.registerLazySingleton<FireauthHelper>(() => FireauthHelper());
+  injector.registerLazySingleton<CacheHelper>(() => CacheHelper());
   injector.registerFactory<InternetConnectionCubit>(
     () => InternetConnectionCubit(),
   );

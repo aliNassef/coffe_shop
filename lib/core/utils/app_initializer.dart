@@ -5,8 +5,9 @@ import '../di/service_locator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:sentry_flutter/sentry_flutter.dart';
- 
+
 import '../../firebase_options.dart';
+import '../helpers/cache_helper.dart';
 import '../helpers/custom_bloc_observer.dart';
 
 class AppInitializer {
@@ -17,7 +18,7 @@ class AppInitializer {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     setupServiceLocator();
-
+    await CacheHelper.init();
     Bloc.observer = CustomBlocObserver();
     await ScreenUtil.ensureScreenSize();
   }
