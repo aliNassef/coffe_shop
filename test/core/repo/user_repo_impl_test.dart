@@ -1,3 +1,4 @@
+import 'package:coffe_shop/core/helpers/cache_helper.dart';
 import 'package:coffe_shop/core/helpers/failure.dart';
 import 'package:coffe_shop/core/helpers/fireauth_helper.dart';
 import 'package:coffe_shop/core/helpers/firestore_helper.dart';
@@ -23,6 +24,7 @@ void main() {
       locationHelper: locationHelper,
       fireauthHelper: FireauthHelper(),
       firestoreHelper: FirestoreHelper(),
+      cacheHelper: CacheHelper(),
     );
   });
 

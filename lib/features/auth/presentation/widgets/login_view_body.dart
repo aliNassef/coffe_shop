@@ -12,6 +12,7 @@ import 'package:gap/gap.dart';
 import '../../../../core/widgets/show_error_message.dart';
 import '../../data/models/user_model.dart';
 import '../controller/auth_cubit/auth_cubit.dart';
+import '../views/signup_view.dart';
 
 class LoginViewBody extends StatefulWidget {
   const LoginViewBody({super.key});
@@ -53,43 +54,62 @@ class _LoginViewBodyState extends State<LoginViewBody> {
             controller: _passwordController,
           ),
           const Gap(20),
-          BlocListener<AuthCubit, AuthState>(
-            listener: (context, state) {
-              if (state is AuthError) {
-                Navigator.pop(context);
-                showErrorMessage(context, errMessage: state.message);
-              }
-              if (state is AuthSuccess) {
-                Navigator.pop(context);
-                if (state.role == UserRole.delivery) {
-                  Navigator.pushReplacementNamed(
-                    context,
-                    DelieveryView.routeName,
-                  );
-                }
-                if (state.role == UserRole.user) {
-                  Navigator.pushReplacementNamed(context, LayoutView.routeName);
-                }
-              }
-
-              if (state is AuthLoading) {
-                showLoadingBox(context);
-              }
-            },
-            child: DefaultAppButton(
-              text: 'Login',
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  context.read<AuthCubit>().login(
-                    _emailController.text.trim(),
-                    _passwordController.text.trim(),
-                  );
-                }
-              },
-            ),
+          _buildBlocListnerButton(context),
+          const Gap(40),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Don\'t have an account?',
+                style: TextStyle(color: Colors.grey),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, SignupView.routeName);
+                },
+                child: const Text('Sign Up'),
+              ),
+            ],
           ),
         ],
       ).withHorizontalPadding(16),
+    );
+  }
+
+  BlocListener<AuthCubit, AuthState> _buildBlocListnerButton(
+    BuildContext context,
+  ) {
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is AuthError) {
+          Navigator.pop(context);
+          showErrorMessage(context, errMessage: state.message);
+        }
+        if (state is AuthSuccess) {
+          Navigator.pop(context);
+          if (state.role == UserRole.delivery) {
+            Navigator.pushReplacementNamed(context, DelieveryView.routeName);
+          }
+          if (state.role == UserRole.user) {
+            Navigator.pushReplacementNamed(context, LayoutView.routeName);
+          }
+        }
+
+        if (state is AuthLoading) {
+          showLoadingBox(context);
+        }
+      },
+      child: DefaultAppButton(
+        text: 'Login',
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            context.read<AuthCubit>().login(
+              _emailController.text.trim(),
+              _passwordController.text.trim(),
+            );
+          }
+        },
+      ),
     );
   }
 }

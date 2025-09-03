@@ -66,40 +66,62 @@ class _SignupViewBodyState extends State<SignupViewBody> {
           const Gap(20),
           CustomDropDownMenu(controller: _roleController),
           const Gap(32),
-          BlocListener<AuthCubit, AuthState>(
-            listener: (context, state) {
-              if (state is AuthLoading) {
-                showLoadingBox(context);
-              }
-              if (state is AuthSuccess) {
-                Navigator.pushReplacementNamed(context, LoginView.routeName);
-              }
-              if (state is AuthError) {
-                showErrorMessage(context, errMessage: state.message);
-                Navigator.pop(context);
-              }
-            },
-            child: DefaultAppButton(
-              text: 'SignUp',
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  var user = UserModel(
-                    email: _emailController.text.trim(),
-                    name: _nameController.text.trim(),
-                    phoneNumber: _phoneController.text.trim(),
-                    role: _roleController.text == UserRole.delivery.name
-                        ? UserRole.delivery
-                        : UserRole.user,
-                  );
-                  context.read<AuthCubit>().register(
-                    user,
-                    _passwordController.text.trim(),
-                  );
-                }
-              },
-            ),
+          _buildBlocListnerSignupButton(context),
+          const Gap(40),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Don\'t have an account?',
+                style: TextStyle(color: Colors.grey),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, LoginView.routeName);
+                },
+                child: const Text('Sign Up'),
+              ),
+            ],
           ),
         ],
+      ),
+    );
+  }
+
+  BlocListener<AuthCubit, AuthState> _buildBlocListnerSignupButton(
+    BuildContext context,
+  ) {
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is AuthLoading) {
+          showLoadingBox(context);
+        }
+        if (state is AuthSuccess) {
+          Navigator.pushReplacementNamed(context, LoginView.routeName);
+        }
+        if (state is AuthError) {
+          showErrorMessage(context, errMessage: state.message);
+          Navigator.pop(context);
+        }
+      },
+      child: DefaultAppButton(
+        text: 'SignUp',
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            var user = UserModel(
+              email: _emailController.text.trim(),
+              name: _nameController.text.trim(),
+              phoneNumber: _phoneController.text.trim(),
+              role: _roleController.text == UserRole.delivery.name
+                  ? UserRole.delivery
+                  : UserRole.user,
+            );
+            context.read<AuthCubit>().register(
+              user,
+              _passwordController.text.trim(),
+            );
+          }
+        },
       ),
     );
   }
