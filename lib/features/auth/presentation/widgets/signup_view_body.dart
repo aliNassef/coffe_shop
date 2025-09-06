@@ -72,14 +72,14 @@ class _SignupViewBodyState extends State<SignupViewBody> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'Don\'t have an account?',
+                'have an account?',
                 style: TextStyle(color: Colors.grey),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, LoginView.routeName);
                 },
-                child: const Text('Sign Up'),
+                child: const Text('Sign In'),
               ),
             ],
           ),
