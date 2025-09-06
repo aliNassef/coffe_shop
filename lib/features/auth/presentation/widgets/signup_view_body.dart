@@ -1,6 +1,6 @@
-import 'package:coffe_shop/core/widgets/show_error_message.dart';
-import 'package:coffe_shop/core/widgets/show_loading_box.dart';
-import 'package:coffe_shop/features/auth/presentation/controller/auth_cubit/auth_cubit.dart';
+import '../../../../core/widgets/show_error_message.dart';
+import '../../../../core/widgets/show_loading_box.dart';
+import '../controller/auth_cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

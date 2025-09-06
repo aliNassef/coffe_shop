@@ -1,10 +1,8 @@
-import 'dart:developer';
-
-import 'package:coffe_shop/core/widgets/show_loading_box.dart';
-import 'package:coffe_shop/features/auth/data/models/user_model.dart';
-import 'package:coffe_shop/features/auth/presentation/views/login_view.dart';
-import 'package:coffe_shop/features/delevery/presentation/view/delievery_view.dart';
-import 'package:coffe_shop/core/controller/user_cubit/user_cubit.dart';
+import '../../../../core/widgets/show_loading_box.dart';
+import '../../../auth/data/models/user_model.dart';
+import '../../../auth/presentation/views/login_view.dart';
+import '../../../delevery/presentation/view/delievery_view.dart';
+import '../../../../core/controller/user_cubit/user_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/extensions/mediaquery_size.dart';
 import '../../../../core/extensions/padding_extension.dart';

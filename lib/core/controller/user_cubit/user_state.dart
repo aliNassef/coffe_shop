@@ -69,7 +69,7 @@ final class GetUserLoading extends UserState {
 final class GetUserLoaded extends UserState {
   final UserModel? user;
 
-  GetUserLoaded({this.user});
+  GetUserLoaded({this.user}ear );
   @override
   List<Object?> get props => [user];
 }

@@ -48,7 +48,7 @@ class OrderModel extends Equatable {
       createdAt: (json['createdAt'] as Timestamp).toDate(),
       deliveryId: json['deliveryId'] ?? '',
       deliveryName: json['deliveryName'] ?? '',
-      deliveryPhone: json['deliveryPhone'] ?? '',
+      deliveryPhone: json['deliveryPhone'] ?? '',ar 
       deliveryLat: (json['deliveryLat'] ?? 0).toDouble(),
       deliveryLong: (json['deliveryLong'] ?? 0).toDouble(),
       coffees: (json['coffees'] as List<dynamic>)

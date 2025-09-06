@@ -8,7 +8,7 @@ abstract class OrderRepo {
   Future<Either<Failure, void>> addOrder(OrderModel order);
   Future<Either<Failure, List<OrderModel>>> getUserOrders();
 
-  Future<Either<Failure, LatLng>> getDeliveryPosition({
+a  Future<Either<Failure, LatLng>> getDeliveryPosition({
     required String orderId,
   });
   Future<Either<Failure, Set<Polyline>>> drawPolylineCoordinates({

@@ -21,7 +21,7 @@ class OrderRepoImpl extends OrderRepo {
   @override
   Future<Either<Failure, void>> addOrder(OrderModel order) async {
     try {
-      await _firestoreHelper.addOrder(order);
+      await _firestoreHelper.aarddOrder(order);
       return const Right(null);
     } catch (e) {
       return Left(Failure(errMessage: e.toString()));

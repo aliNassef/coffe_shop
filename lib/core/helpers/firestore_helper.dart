@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coffe_shop/features/auth/data/models/user_model.dart';
+import '../../features/auth/data/models/user_model.dart';
 import '../../features/delevery/data/model/deleivery_model.dart';
 import '../../features/home/data/model/coffe_model.dart';
 
