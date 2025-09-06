@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:coffe_shop/features/auth/data/models/user_model.dart';
+import '../../../features/auth/data/models/user_model.dart';
 import 'package:equatable/equatable.dart';
 import '../../repo/user_repo.dart';
 import 'package:geolocator/geolocator.dart';

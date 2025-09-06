@@ -1,6 +1,6 @@
-import 'package:coffe_shop/core/di/service_locator.dart';
-import 'package:coffe_shop/core/extensions/padding_extension.dart';
-import 'package:coffe_shop/features/auth/presentation/controller/auth_cubit/auth_cubit.dart';
+import '../../../../core/di/service_locator.dart';
+import '../../../../core/extensions/padding_extension.dart';
+import '../controller/auth_cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

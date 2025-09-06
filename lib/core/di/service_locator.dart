@@ -1,5 +1,5 @@
-import 'package:coffe_shop/core/helpers/cache_helper.dart';
-import 'package:coffe_shop/core/helpers/fireauth_helper.dart';
+import '../helpers/cache_helper.dart';
+import '../helpers/fireauth_helper.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../features/auth/data/repo/auth_repo.dart';

@@ -1,6 +1,6 @@
-import 'package:coffe_shop/core/helpers/fireauth_helper.dart';
-import 'package:coffe_shop/core/helpers/firestore_helper.dart';
-import 'package:coffe_shop/features/auth/data/models/user_model.dart';
+import '../helpers/fireauth_helper.dart';
+import '../helpers/firestore_helper.dart';
+import '../../features/auth/data/models/user_model.dart';
 import '../helpers/cache_helper.dart';
 import '../helpers/failure.dart';
 import 'user_repo.dart';

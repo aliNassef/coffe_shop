@@ -1,10 +1,10 @@
-import 'package:coffe_shop/core/extensions/padding_extension.dart';
-import 'package:coffe_shop/core/utils/app_assets.dart';
-import 'package:coffe_shop/core/widgets/custom_text_form_field.dart';
-import 'package:coffe_shop/core/widgets/default_app_button.dart';
-import 'package:coffe_shop/core/widgets/show_loading_box.dart';
-import 'package:coffe_shop/features/delevery/presentation/view/delievery_view.dart';
-import 'package:coffe_shop/features/layout/presentation/views/layout_view.dart';
+import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/utils/app_assets.dart';
+import '../../../../core/widgets/custom_text_form_field.dart';
+import '../../../../core/widgets/default_app_button.dart';
+import '../../../../core/widgets/show_loading_box.dart';
+import '../../../delevery/presentation/view/delievery_view.dart';
+import '../../../layout/presentation/views/layout_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
