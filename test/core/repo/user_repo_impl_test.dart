@@ -12,19 +12,26 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../features/home/data/repo/home_repo_impl_test.mocks.dart';
+import 'user_repo_impl_test.mocks.dart' hide MockLocationHelper, MockFirestoreHelper;
 
-@GenerateMocks([LocationHelper])
+@GenerateMocks([LocationHelper, FireauthHelper, FirestoreHelper, CacheHelper])
 void main() {
   late LocationHelper locationHelper;
   late UserRepo userRepo;
+  late FirestoreHelper firestoreHelper;
+  late FireauthHelper fireauthHelper;
+  late CacheHelper cacheHelper;
 
   setUp(() {
     locationHelper = MockLocationHelper();
+    firestoreHelper = MockFirestoreHelper();
+    fireauthHelper = MockFireauthHelper();
+    cacheHelper = MockCacheHelper();
     userRepo = UserRepoImpl(
       locationHelper: locationHelper,
-      fireauthHelper: FireauthHelper(),
-      firestoreHelper: FirestoreHelper(),
-      cacheHelper: CacheHelper(),
+      fireauthHelper: fireauthHelper,
+      firestoreHelper: firestoreHelper,
+      cacheHelper: cacheHelper,
     );
   });
 

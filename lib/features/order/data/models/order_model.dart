@@ -92,7 +92,6 @@ class OrderModel extends Equatable {
     userLat,
     userLong,
     status,
-    createdAt,
     deliveryId,
     deliveryName,
     deliveryPhone,

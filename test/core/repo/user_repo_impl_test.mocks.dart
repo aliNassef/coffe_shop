@@ -3,13 +3,21 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
-import 'package:coffe_shop/core/helpers/location_helper.dart' as _i3;
+import 'package:coffe_shop/core/helpers/cache_helper.dart' as _i13;
+import 'package:coffe_shop/core/helpers/fireauth_helper.dart' as _i8;
+import 'package:coffe_shop/core/helpers/firestore_helper.dart' as _i9;
+import 'package:coffe_shop/core/helpers/location_helper.dart' as _i4;
+import 'package:coffe_shop/features/auth/data/models/user_model.dart' as _i3;
+import 'package:coffe_shop/features/delevery/data/model/deleivery_model.dart'
+    as _i12;
+import 'package:coffe_shop/features/home/data/model/coffe_model.dart' as _i11;
+import 'package:coffe_shop/features/order/data/models/order_model.dart' as _i10;
 import 'package:geolocator/geolocator.dart' as _i2;
-import 'package:google_maps_flutter/google_maps_flutter.dart' as _i6;
+import 'package:google_maps_flutter/google_maps_flutter.dart' as _i7;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i5;
+import 'package:mockito/src/dummies.dart' as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -30,44 +38,49 @@ class _FakePosition_0 extends _i1.SmartFake implements _i2.Position {
     : super(parent, parentInvocation);
 }
 
+class _FakeUserModel_1 extends _i1.SmartFake implements _i3.UserModel {
+  _FakeUserModel_1(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
 /// A class which mocks [LocationHelper].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLocationHelper extends _i1.Mock implements _i3.LocationHelper {
+class MockLocationHelper extends _i1.Mock implements _i4.LocationHelper {
   MockLocationHelper() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.Position> getUserCoardinates() =>
+  _i5.Future<_i2.Position> getUserCoardinates() =>
       (super.noSuchMethod(
             Invocation.method(#getUserCoardinates, []),
-            returnValue: _i4.Future<_i2.Position>.value(
+            returnValue: _i5.Future<_i2.Position>.value(
               _FakePosition_0(this, Invocation.method(#getUserCoardinates, [])),
             ),
           )
-          as _i4.Future<_i2.Position>);
+          as _i5.Future<_i2.Position>);
 
   @override
-  _i4.Future<String> getCurrentLocation() =>
+  _i5.Future<String> getCurrentLocation() =>
       (super.noSuchMethod(
             Invocation.method(#getCurrentLocation, []),
-            returnValue: _i4.Future<String>.value(
-              _i5.dummyValue<String>(
+            returnValue: _i5.Future<String>.value(
+              _i6.dummyValue<String>(
                 this,
                 Invocation.method(#getCurrentLocation, []),
               ),
             ),
           )
-          as _i4.Future<String>);
+          as _i5.Future<String>);
 
   @override
-  _i4.Stream<_i2.Position> getPositionStream() =>
+  _i5.Stream<_i2.Position> getPositionStream() =>
       (super.noSuchMethod(
             Invocation.method(#getPositionStream, []),
-            returnValue: _i4.Stream<_i2.Position>.empty(),
+            returnValue: _i5.Stream<_i2.Position>.empty(),
           )
-          as _i4.Stream<_i2.Position>);
+          as _i5.Stream<_i2.Position>);
 
   @override
   double getDiffDistance(
@@ -83,22 +96,22 @@ class MockLocationHelper extends _i1.Mock implements _i3.LocationHelper {
           as double);
 
   @override
-  _i4.Future<Set<_i6.Polyline>> getPolylineCoordinates({
-    required _i6.LatLng? start,
-    required _i6.LatLng? end,
+  _i5.Future<Set<_i7.Polyline>> getPolylineCoordinates({
+    required _i7.LatLng? start,
+    required _i7.LatLng? end,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#getPolylineCoordinates, [], {
               #start: start,
               #end: end,
             }),
-            returnValue: _i4.Future<Set<_i6.Polyline>>.value(<_i6.Polyline>{}),
+            returnValue: _i5.Future<Set<_i7.Polyline>>.value(<_i7.Polyline>{}),
           )
-          as _i4.Future<Set<_i6.Polyline>>);
+          as _i5.Future<Set<_i7.Polyline>>);
 
   @override
-  Set<_i6.Polyline> buildPolylineSet(
-    List<_i6.LatLng>? polylineCoordinates, {
+  Set<_i7.Polyline> buildPolylineSet(
+    List<_i7.LatLng>? polylineCoordinates, {
     String? polylineId = 'route',
     int? width = 5,
   }) =>
@@ -108,7 +121,199 @@ class MockLocationHelper extends _i1.Mock implements _i3.LocationHelper {
               [polylineCoordinates],
               {#polylineId: polylineId, #width: width},
             ),
-            returnValue: <_i6.Polyline>{},
+            returnValue: <_i7.Polyline>{},
           )
-          as Set<_i6.Polyline>);
+          as Set<_i7.Polyline>);
+}
+
+/// A class which mocks [FireauthHelper].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockFireauthHelper extends _i1.Mock implements _i8.FireauthHelper {
+  MockFireauthHelper() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i5.Future<_i3.UserModel> registerUser({
+    required _i3.UserModel? user,
+    required String? password,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#registerUser, [], {
+              #user: user,
+              #password: password,
+            }),
+            returnValue: _i5.Future<_i3.UserModel>.value(
+              _FakeUserModel_1(
+                this,
+                Invocation.method(#registerUser, [], {
+                  #user: user,
+                  #password: password,
+                }),
+              ),
+            ),
+          )
+          as _i5.Future<_i3.UserModel>);
+
+  @override
+  _i5.Future<_i3.UserModel?> loginUser(String? email, String? password) =>
+      (super.noSuchMethod(
+            Invocation.method(#loginUser, [email, password]),
+            returnValue: _i5.Future<_i3.UserModel?>.value(),
+          )
+          as _i5.Future<_i3.UserModel?>);
+}
+
+/// A class which mocks [FirestoreHelper].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockFirestoreHelper extends _i1.Mock implements _i9.FirestoreHelper {
+  MockFirestoreHelper() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i5.Future<void> addOrder(_i10.OrderModel? order) =>
+      (super.noSuchMethod(
+            Invocation.method(#addOrder, [order]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
+
+  @override
+  _i5.Future<_i10.OrderModel?> getOrderById(String? orderId) =>
+      (super.noSuchMethod(
+            Invocation.method(#getOrderById, [orderId]),
+            returnValue: _i5.Future<_i10.OrderModel?>.value(),
+          )
+          as _i5.Future<_i10.OrderModel?>);
+
+  @override
+  _i5.Future<List<_i10.OrderModel>> getAllOrders() =>
+      (super.noSuchMethod(
+            Invocation.method(#getAllOrders, []),
+            returnValue: _i5.Future<List<_i10.OrderModel>>.value(
+              <_i10.OrderModel>[],
+            ),
+          )
+          as _i5.Future<List<_i10.OrderModel>>);
+
+  @override
+  _i5.Future<_i11.CoffeeModel?> getCoffeeById(String? coffeeId) =>
+      (super.noSuchMethod(
+            Invocation.method(#getCoffeeById, [coffeeId]),
+            returnValue: _i5.Future<_i11.CoffeeModel?>.value(),
+          )
+          as _i5.Future<_i11.CoffeeModel?>);
+
+  @override
+  _i5.Future<List<_i11.CoffeeModel>> getAllCoffees() =>
+      (super.noSuchMethod(
+            Invocation.method(#getAllCoffees, []),
+            returnValue: _i5.Future<List<_i11.CoffeeModel>>.value(
+              <_i11.CoffeeModel>[],
+            ),
+          )
+          as _i5.Future<List<_i11.CoffeeModel>>);
+
+  @override
+  _i5.Future<List<_i11.CoffeeModel>> searchCoffees(String? query) =>
+      (super.noSuchMethod(
+            Invocation.method(#searchCoffees, [query]),
+            returnValue: _i5.Future<List<_i11.CoffeeModel>>.value(
+              <_i11.CoffeeModel>[],
+            ),
+          )
+          as _i5.Future<List<_i11.CoffeeModel>>);
+
+  @override
+  _i5.Stream<List<_i10.OrderModel>> getOrdersStream() =>
+      (super.noSuchMethod(
+            Invocation.method(#getOrdersStream, []),
+            returnValue: _i5.Stream<List<_i10.OrderModel>>.empty(),
+          )
+          as _i5.Stream<List<_i10.OrderModel>>);
+
+  @override
+  _i5.Future<void> acceptOrder({
+    required _i12.DeleiveryModel? deleveryModel,
+    required String? orderId,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#acceptOrder, [], {
+              #deleveryModel: deleveryModel,
+              #orderId: orderId,
+            }),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> changeOrderStatus({
+    required String? orderId,
+    required String? status,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#changeOrderStatus, [], {
+              #orderId: orderId,
+              #status: status,
+            }),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> updateDeliveryLatLong(
+    double? lat,
+    double? long,
+    String? orderId,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#updateDeliveryLatLong, [lat, long, orderId]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> addUser(_i3.UserModel? user) =>
+      (super.noSuchMethod(
+            Invocation.method(#addUser, [user]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
+
+  @override
+  _i5.Future<_i3.UserModel?> getUserById(String? userId) =>
+      (super.noSuchMethod(
+            Invocation.method(#getUserById, [userId]),
+            returnValue: _i5.Future<_i3.UserModel?>.value(),
+          )
+          as _i5.Future<_i3.UserModel?>);
+}
+
+/// A class which mocks [CacheHelper].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockCacheHelper extends _i1.Mock implements _i13.CacheHelper {
+  MockCacheHelper() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i5.Future<bool> saveData({required String? key, required dynamic value}) =>
+      (super.noSuchMethod(
+            Invocation.method(#saveData, [], {#key: key, #value: value}),
+            returnValue: _i5.Future<bool>.value(false),
+          )
+          as _i5.Future<bool>);
+
+  @override
+  dynamic getData(String? key) =>
+      super.noSuchMethod(Invocation.method(#getData, [key]));
 }

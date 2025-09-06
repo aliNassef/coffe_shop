@@ -6,15 +6,16 @@
 import 'dart:async' as _i4;
 
 import 'package:coffe_shop/core/helpers/firestore_helper.dart' as _i3;
-import 'package:coffe_shop/core/helpers/location_helper.dart' as _i8;
+import 'package:coffe_shop/core/helpers/location_helper.dart' as _i9;
+import 'package:coffe_shop/features/auth/data/models/user_model.dart' as _i8;
 import 'package:coffe_shop/features/delevery/data/model/deleivery_model.dart'
     as _i7;
 import 'package:coffe_shop/features/home/data/model/coffe_model.dart' as _i6;
 import 'package:coffe_shop/features/order/data/models/order_model.dart' as _i5;
 import 'package:geolocator/geolocator.dart' as _i2;
-import 'package:google_maps_flutter/google_maps_flutter.dart' as _i10;
+import 'package:google_maps_flutter/google_maps_flutter.dart' as _i11;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i9;
+import 'package:mockito/src/dummies.dart' as _i10;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -148,12 +149,29 @@ class MockFirestoreHelper extends _i1.Mock implements _i3.FirestoreHelper {
             returnValueForMissingStub: _i4.Future<void>.value(),
           )
           as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> addUser(_i8.UserModel? user) =>
+      (super.noSuchMethod(
+            Invocation.method(#addUser, [user]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
+
+  @override
+  _i4.Future<_i8.UserModel?> getUserById(String? userId) =>
+      (super.noSuchMethod(
+            Invocation.method(#getUserById, [userId]),
+            returnValue: _i4.Future<_i8.UserModel?>.value(),
+          )
+          as _i4.Future<_i8.UserModel?>);
 }
 
 /// A class which mocks [LocationHelper].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLocationHelper extends _i1.Mock implements _i8.LocationHelper {
+class MockLocationHelper extends _i1.Mock implements _i9.LocationHelper {
   MockLocationHelper() {
     _i1.throwOnMissingStub(this);
   }
@@ -173,7 +191,7 @@ class MockLocationHelper extends _i1.Mock implements _i8.LocationHelper {
       (super.noSuchMethod(
             Invocation.method(#getCurrentLocation, []),
             returnValue: _i4.Future<String>.value(
-              _i9.dummyValue<String>(
+              _i10.dummyValue<String>(
                 this,
                 Invocation.method(#getCurrentLocation, []),
               ),
@@ -203,24 +221,24 @@ class MockLocationHelper extends _i1.Mock implements _i8.LocationHelper {
           as double);
 
   @override
-  _i4.Future<Set<_i10.Polyline>> getPolylineCoordinates({
-    required _i10.LatLng? start,
-    required _i10.LatLng? end,
+  _i4.Future<Set<_i11.Polyline>> getPolylineCoordinates({
+    required _i11.LatLng? start,
+    required _i11.LatLng? end,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#getPolylineCoordinates, [], {
               #start: start,
               #end: end,
             }),
-            returnValue: _i4.Future<Set<_i10.Polyline>>.value(
-              <_i10.Polyline>{},
+            returnValue: _i4.Future<Set<_i11.Polyline>>.value(
+              <_i11.Polyline>{},
             ),
           )
-          as _i4.Future<Set<_i10.Polyline>>);
+          as _i4.Future<Set<_i11.Polyline>>);
 
   @override
-  Set<_i10.Polyline> buildPolylineSet(
-    List<_i10.LatLng>? polylineCoordinates, {
+  Set<_i11.Polyline> buildPolylineSet(
+    List<_i11.LatLng>? polylineCoordinates, {
     String? polylineId = 'route',
     int? width = 5,
   }) =>
@@ -230,7 +248,7 @@ class MockLocationHelper extends _i1.Mock implements _i8.LocationHelper {
               [polylineCoordinates],
               {#polylineId: polylineId, #width: width},
             ),
-            returnValue: <_i10.Polyline>{},
+            returnValue: <_i11.Polyline>{},
           )
-          as Set<_i10.Polyline>);
+          as Set<_i11.Polyline>);
 }

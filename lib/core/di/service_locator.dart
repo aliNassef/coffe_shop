@@ -28,8 +28,8 @@ final injector = GetIt.instance;
 
 void setupServiceLocator() async {
   _setupExternal();
-  _setupHomeFeature();
   _setupUserFeature();
+  _setupHomeFeature();
   _setupOrderFeature();
   _setupDeleveryFeature();
   _setupAuthFeature();

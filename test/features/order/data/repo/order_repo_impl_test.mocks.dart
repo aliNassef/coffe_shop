@@ -7,6 +7,7 @@ import 'dart:async' as _i4;
 
 import 'package:coffe_shop/core/helpers/firestore_helper.dart' as _i7;
 import 'package:coffe_shop/core/helpers/location_helper.dart' as _i3;
+import 'package:coffe_shop/features/auth/data/models/user_model.dart' as _i11;
 import 'package:coffe_shop/features/delevery/data/model/deleivery_model.dart'
     as _i10;
 import 'package:coffe_shop/features/home/data/model/coffe_model.dart' as _i9;
@@ -231,4 +232,21 @@ class MockFirestoreHelper extends _i1.Mock implements _i7.FirestoreHelper {
             returnValueForMissingStub: _i4.Future<void>.value(),
           )
           as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> addUser(_i11.UserModel? user) =>
+      (super.noSuchMethod(
+            Invocation.method(#addUser, [user]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
+
+  @override
+  _i4.Future<_i11.UserModel?> getUserById(String? userId) =>
+      (super.noSuchMethod(
+            Invocation.method(#getUserById, [userId]),
+            returnValue: _i4.Future<_i11.UserModel?>.value(),
+          )
+          as _i4.Future<_i11.UserModel?>);
 }
