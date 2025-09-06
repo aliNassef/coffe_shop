@@ -26,7 +26,7 @@ class OrderViewBody extends StatefulWidget {
 }
 
 class _OrderViewBodyState extends State<OrderViewBody> {
-  int _orderCount = 0;
+  int _orderCount = 1;
   @override
   void initState() {
     super.initState();
@@ -178,7 +178,7 @@ class _OrderViewBodyState extends State<OrderViewBody> {
                         userPhone: userNameAndPhone.$2,
                         userLat: userPosition.latitude,
                         userLong: userPosition.longitude,
-                        status: getOrderStatusName(OrderStatus.onTheWay),
+                        status: getOrderStatusName(OrderStatus.notStartedYet),
                         createdAt: DateTime.now(),
                         coffees: [coffe],
                       );

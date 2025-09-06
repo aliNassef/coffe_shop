@@ -54,9 +54,7 @@ class SplashView extends StatelessWidget {
                 listener: (context, state) {
                   if (state is GetUserLoaded) {
                     Navigator.pop(context);
-                    log(state.user!.role.toString());
                     if (state.user == null) _goToLoginScreen(context);
-
                     if (state.user!.role == UserRole.delivery) {
                       _goToDeliveryScreen(context);
                     } else if (state.user!.role == UserRole.user) {

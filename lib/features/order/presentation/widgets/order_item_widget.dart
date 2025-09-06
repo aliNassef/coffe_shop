@@ -138,17 +138,22 @@ class OrderItemWidget extends StatelessWidget {
               trailing: Text(coffe.count.toString()),
             ),
           ),
-          Gap(16),
           Visibility(
-            child: DefaultAppButton(
-              text: 'Track Your Order',
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  TrackOrderMapView.routeName,
-                  arguments: order,
-                );
-              },
+            visible: order.status != getOrderStatusName(OrderStatus.delivered),
+            child: Column(
+              children: [
+                Gap(16),
+                DefaultAppButton(
+                  text: 'Track Your Order',
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      TrackOrderMapView.routeName,
+                      arguments: order,
+                    );
+                  },
+                ),
+              ],
             ),
           ),
         ],

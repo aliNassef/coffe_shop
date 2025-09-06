@@ -151,16 +151,24 @@ class DeliveryOrderItem extends StatelessWidget {
             ),
             Gap(16),
             AcceptorRejectOrderButton(order: order),
-            Gap(16),
-            DefaultAppButton(
-              text: 'Open Map',
-              onPressed: () {
-                context.read<DeliveryCubit>().changeOrderStatus(
-                  order.orderId,
-                  getOrderStatusName(OrderStatus.onTheWay),
-                );
-                _openMap(context);
-              },
+            Visibility(
+              visible:
+                  order.status == getOrderStatusName(OrderStatus.delivered),
+              child: Column(
+                children: [
+                  Gap(16),
+                  DefaultAppButton(
+                    text: 'Open Map',
+                    onPressed: () {
+                      context.read<DeliveryCubit>().changeOrderStatus(
+                        order.orderId,
+                        getOrderStatusName(OrderStatus.onTheWay),
+                      );
+                      _openMap(context);
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),

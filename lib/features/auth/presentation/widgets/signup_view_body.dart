@@ -112,7 +112,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
               email: _emailController.text.trim(),
               name: _nameController.text.trim(),
               phoneNumber: _phoneController.text.trim(),
-              role: _roleController.text == UserRole.delivery.name
+              role: _roleController.text == UserRole.delivery
                   ? UserRole.delivery
                   : UserRole.user,
             );
