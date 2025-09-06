@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import '../../../../core/extensions/mediaquery_size.dart';
 import '../controller/bloc/coffe_search_bloc.dart';
-import '../../../order/presentation/controller/user_cubit/user_cubit.dart';
+import '../../../../core/controller/user_cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

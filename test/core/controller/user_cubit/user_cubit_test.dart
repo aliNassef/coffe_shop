@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:coffe_shop/core/helpers/failure.dart';
 import 'package:coffe_shop/core/repo/user_repo.dart';
-import 'package:coffe_shop/features/order/presentation/controller/user_cubit/user_cubit.dart';
+import 'package:coffe_shop/core/controller/user_cubit/user_cubit.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geolocator/geolocator.dart';

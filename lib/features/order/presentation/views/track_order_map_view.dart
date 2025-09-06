@@ -9,7 +9,7 @@ import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../data/models/order_model.dart';
 import '../controller/bloc/get_order_position_bloc.dart';
-import '../controller/user_cubit/user_cubit.dart';
+import '../../../../core/controller/user_cubit/user_cubit.dart';
 import '../widgets/track_order_map_top_bar.dart';
 
 class TrackOrderMapView extends StatefulWidget {
