@@ -43,7 +43,7 @@ class _AcceptorRejectOrderButtonState extends State<AcceptorRejectOrderButton> {
               text: 'Reject',
               onPressed: () {
                 var deliveryModel = DeleiveryModel(
-                  deliveryId: '1',
+                  deliveryId: context.read<UserCubit>().getUserId(),
                   deliveryName: 'Mohammed',
                   deliveryPhone: '01128861472',
                   deliveryLat: 11,
@@ -73,10 +73,13 @@ class _AcceptorRejectOrderButtonState extends State<AcceptorRejectOrderButton> {
                 return DefaultAppButton(
                   text: 'Accept',
                   onPressed: () {
+                    (String, String) nameAndPhone = context
+                        .read<UserCubit>()
+                        .getuserNameAndPhone();
                     var deliveryModel = DeleiveryModel(
-                      deliveryId: '1',
-                      deliveryName: 'Mohammed',
-                      deliveryPhone: '01128861472',
+                      deliveryId: context.read<UserCubit>().getUserId(),
+                      deliveryName: nameAndPhone.$1,
+                      deliveryPhone: nameAndPhone.$2,
                       deliveryLat: state!.latitude,
                       deliveryLong: state.longitude,
                       status: getOrderStatusName(OrderStatus.onTheWay),

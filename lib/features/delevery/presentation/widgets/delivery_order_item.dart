@@ -149,11 +149,11 @@ class DeliveryOrderItem extends StatelessWidget {
                 ),
               ),
             ),
-            Gap(16),
+
             AcceptorRejectOrderButton(order: order),
             Visibility(
               visible:
-                  order.status == getOrderStatusName(OrderStatus.delivered),
+                  order.status != getOrderStatusName(OrderStatus.delivered),
               child: Column(
                 children: [
                   Gap(16),
