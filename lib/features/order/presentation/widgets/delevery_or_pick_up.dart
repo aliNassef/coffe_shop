@@ -16,7 +16,7 @@ class DeleveryOrPickUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: context.width * .44,
+      width: context.width * .43,
       alignment: Alignment.center,
       height: 50.h,
       decoration: BoxDecoration(
