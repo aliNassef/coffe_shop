@@ -113,7 +113,7 @@ class _DeliveryMapViewState extends State<DeliveryMapView> {
     );
     log(" distance: $distance");
     if (distance < 100) {
-      log('order delivered');
+      Navigator.pop(context);
     }
   }
 

@@ -32,4 +32,8 @@ class OrderCubit extends Cubit<OrderState> {
   void changeOrderCount(int count) {
     emit(ChangeOrderCount(count: count));
   }
+
+  double getDiffDistance({required LatLng start, required LatLng end}) {
+    return __orderRepo.getDiffDistance(start: start, end: end);
+  }
 }

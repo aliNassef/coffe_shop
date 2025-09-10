@@ -87,3 +87,4 @@ final class GetOrderPositonFailure extends OrderState {
   @override
   List<Object> get props => [errMessage];
 }
+ 

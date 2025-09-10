@@ -15,8 +15,11 @@ class OrderRepoImpl extends OrderRepo {
 
   final LocationHelper _locationHelper;
 
-  OrderRepoImpl({required FirestoreHelper firestoreHelper, required LocationHelper locationHelper})
-    : _firestoreHelper = firestoreHelper , _locationHelper = locationHelper;
+  OrderRepoImpl({
+    required FirestoreHelper firestoreHelper,
+    required LocationHelper locationHelper,
+  }) : _firestoreHelper = firestoreHelper,
+       _locationHelper = locationHelper;
 
   @override
   Future<Either<Failure, void>> addOrder(OrderModel order) async {
@@ -61,6 +64,33 @@ class OrderRepoImpl extends OrderRepo {
         end: end,
       );
       return Right(polylines);
+    } catch (e) {
+      return Left(Failure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  double getDiffDistance({required LatLng start, required LatLng end}) {
+    final distance = _locationHelper.getDiffDistance(
+      start.latitude,
+      start.longitude,
+      end.latitude,
+      end.longitude,
+    );
+    return distance;
+  }
+
+  @override
+  Future<Either<Failure, void>> updateOrderStatus({
+    required String orderId,
+    required String status,
+  }) async {
+    try {
+      await _firestoreHelper.changeOrderStatus(
+        orderId: orderId,
+        status: status,
+      );
+      return const Right(null);
     } catch (e) {
       return Left(Failure(errMessage: e.toString()));
     }

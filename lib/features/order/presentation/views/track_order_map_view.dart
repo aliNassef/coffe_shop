@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:coffe_shop/features/order/presentation/controller/order_cubit/order_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,6 +60,7 @@ class _TrackOrderMapViewState extends State<TrackOrderMapView> {
             orderPosition = state.position;
             _getPolyLine();
           }
+          _getDiffDistance(context);
         },
         builder: (context, state) {
           if (state is DrawPolylineState) {
@@ -130,5 +133,16 @@ class _TrackOrderMapViewState extends State<TrackOrderMapView> {
         destination: LatLng(orderPosition!.latitude, orderPosition!.longitude),
       ),
     );
+  }
+
+  void _getDiffDistance(BuildContext context) {
+    double distance = context.read<OrderCubit>().getDiffDistance(
+      start: userPosition!,
+      end: orderPosition!,
+    );
+    log(" distance: $distance");
+    if (distance < 100) {
+      Navigator.pop(context);
+    }
   }
 }
